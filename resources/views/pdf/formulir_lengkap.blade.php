@@ -1,164 +1,315 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Berkas Paspor Lengkap</title>
+    <title>Formulir Paspor Lengkap</title>
     <style>
-        /* --- GLOBAL STYLE --- */
+        /* --- GLOBAL --- */
         body { font-family: Arial, Helvetica, sans-serif; font-size: 10px; padding: 20px 30px; }
-        
-        /* Utility */
         .page-break { page-break-after: always; }
         .text-center { text-align: center; }
-        .text-right { text-align: right; }
         .text-justify { text-align: justify; }
         .bold { font-weight: bold; }
         .uppercase { text-transform: uppercase; }
 
-        /* --- HEADER STYLE --- */
-        .header-wrapper { position: relative; width: 100%; height: 50px; margin-bottom: 5px; }
-        .instansi { text-align: center; font-weight: bold; font-size: 12px; line-height: 1.3; }
-        .nomor-perdim { position: absolute; top: -20px; right: 0; font-weight: bold; font-size: 11px; }
-        .garis-kop { border-bottom: 3px double #000; margin-bottom: 10px; }
-        
-        /* --- LAYOUT GRID PERDIM --- */
-        table.layout { width: 100%; border-collapse: collapse; margin-bottom: 5px; }
-        table.layout td { vertical-align: middle; padding: 3px 0; }
-        
-        /* Kolom Label & Input Perdim */
-        .col-label-L { width: 140px; font-weight: bold; text-transform: uppercase; }
-        .col-input-L { width: auto; }
-        .col-label-R { width: 100px; font-weight: bold; text-transform: uppercase; padding-left: 10px;}
-        .col-input-R { width: 110px; }
+        /* --- HEADER HALAMAN 1 --- */
+        .header-wrapper { height: 50px; margin-bottom: 5px; }
+        .instansi { float: left; font-weight: bold; font-size: 10px; line-height: 1.2; }
+        .nomor-perdim { float: right; font-weight: bold; font-size: 11px; text-align: right; }
+        .clear { clear: both; }
 
-        /* Kotak Styles */
-        .kotak { display: inline-block; width: 15px; height: 16px; border: 1px solid #000; text-align: center; line-height: 15px; font-weight: bold; font-size: 11px; margin-right: 2px; }
-        .kotak-sambung { display: inline-block; width: 15px; height: 16px; border: 1px solid #000; text-align: center; line-height: 15px; font-weight: bold; font-size: 11px; margin-right: -1px; }
-        .small-unit { font-size: 9px; margin-left: 3px; }
+        /* --- TABEL UTAMA (LAYOUT FORM) --- */
+        table.form-layout { 
+            width: 100%; 
+            border-collapse: collapse; 
+            border: 2px solid #000; /* Bingkai Luar Tebal */
+        }
+        
+        /* Baris Biasa (Garis Bawah Tipis) */
+        table.form-layout tr { border-bottom: 1px solid #000; }
+        
+        /* Sel Biasa (Tanpa Kotak, Padding Rapi) */
+        table.form-layout td { 
+            padding: 3px 5px; 
+            vertical-align: top;
+        }
 
-        /* --- STYLE SURAT TEXT (Pernyataan & Wawancara) --- */
+        /* Garis Pemisah Vertikal (Untuk memisah Kiri/Kanan) */
+        .border-right { border-right: 1px solid #000; }
+
+        /* Hapus Border Bawah (Untuk Baris Split seperti Alamat) */
+        .no-border-bottom { border-bottom: none !important; }
+        .no-border-top { border-top: none !important; }
+
+        /* LABEL & INPUT */
+        .f-label {
+            font-size: 8px; font-weight: bold; color: #555;
+            text-transform: uppercase; margin-bottom: 1px; display: block;
+        }
+        
+        /* Label dengan Titik Hitam */
+        .label-with-dot { display: block; margin-bottom: 1px; }
+        .dot { display: inline-block; width: 8px; height: 8px; background: #000; margin-right: 4px; vertical-align: middle; }
+        .label-text { font-size: 8px; font-weight: bold; color: #555; text-transform: uppercase; vertical-align: middle; }
+
+        /* KOTAK ISIAN */
+        .box-row { margin-top: 1px; white-space: nowrap; }
+        .k { 
+            display: inline-block; width: 13px; height: 14px; 
+            border: 1px solid #000; text-align: center; 
+            line-height: 13px; font-size: 10px; font-weight: bold; 
+            margin-right: 1px; vertical-align: middle;
+        }
+        .k-sambung { 
+            display: inline-block; width: 13px; height: 14px; 
+            border: 1px solid #000; text-align: center; 
+            line-height: 13px; font-size: 10px; font-weight: bold; 
+            margin-right: -1px; vertical-align: middle;
+        }
+        
+        /* CHECKBOX */
+        .chk { display: inline-block; width: 12px; height: 12px; border: 1px solid #000; text-align: center; line-height: 11px; font-size: 9px; vertical-align: middle; }
+
+        /* --- STYLES SURAT TEXT (Pernyataan & Wawancara) --- */
         table.plain-table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
-        table.plain-table td { vertical-align: top; padding: 4px 0; font-size: 11px; }
-        
+        table.plain-table td { vertical-align: top; padding: 4px 0; font-size: 11px; border: none; }
         .isian-text { font-weight: bold; font-size: 11px; text-transform: uppercase; }
         .border-dots { border-bottom: 1px dotted #000; }
-        
-        .list-numbered { padding-left: 20px; margin: 5px 0; }
-        .list-numbered li { margin-bottom: 5px; text-align: justify; }
-
         .materai-box { border: 1px solid #ccc; width: 60px; height: 30px; margin: 10px auto; font-size: 8px; padding-top: 10px; text-align: center; }
-        .ttd-block { width: 250px; text-align: center; }
+        .ttd-area { width: 250px; text-align: center; float: right; }
+        .ttd-left { width: 250px; text-align: center; float: left; }
     </style>
 </head>
 <body>
 
     <div class="header-wrapper">
-        <div class="instansi">{{ $kop_instansi }}<br>DIREKTORAT JENDERAL IMIGRASI</div>
-        <div class="nomor-perdim">PERDIM : 11</div>
-    </div>
-    <div class="garis-kop"></div>
-    <h3 class="text-center" style="text-decoration: underline; margin: 0 0 10px 0;">FORMULIR PERJALANAN REPUBLIK INDONESIA</h3>
-    
-    <div style="font-size: 9px; margin-bottom: 10px;">
-        Perhatian: 1. Isi formulir dengan HURUF CETAK dan TINTA HITAM<br>
-        2. Tanda asterisk (*) berarti diisi sesuai nomor pilihan
+        <div class="instansi">
+            KEMENTERIAN HUKUM DAN HAK ASASI MANUSIA RI<br>
+            KANTOR WILAYAH DEP. HUKUM DAN HAM JAWA TENGAH<br>
+            KANTOR IMIGRASI WONOSOBO
+        </div>
+        <div class="nomor-perdim">
+            PERDIM : 11<br>NO: ....................
+        </div>
+        <div class="clear"></div>
     </div>
 
-    <div style="border: 1px solid black; padding: 5px;">
-        <table class="layout">
-            <tr>
-                <td class="col-label-L">PERMOHONAN *</td>
-                <td><div class="kotak">X</div> Baru &nbsp;&nbsp; <div class="kotak">&nbsp;</div> Penggantian</td>
-            </tr>
-        </table>
-        <hr style="border: 0; border-top: 1px solid black; margin: 2px 0 5px 0;">
-
-        <table class="layout">
-            <tr>
-                <td class="col-label-L">NAMA LENGKAP</td>
-                <td class="col-input-L">
-                    @foreach($nama_chars as $char) <div class="kotak">{{ $char }}</div> @endforeach
-                </td>
-                <td class="col-label-R">JENIS KELAMIN</td>
-                <td class="col-input-R">
-                    <div class="kotak">{{ $jk == 'L' ? 'X' : '' }}</div> L &nbsp; <div class="kotak">{{ $jk == 'P' ? 'X' : '' }}</div> P
-                </td>
-            </tr>
-            <tr>
-                <td class="col-label-L">NAMA LAIN (ALIAS)</td>
-                <td class="col-input-L">@for($i=0; $i<20; $i++) <div class="kotak">&nbsp;</div> @endfor</td>
-                <td class="col-label-R">TINGGI BADAN</td>
-                <td class="col-input-R">
-                    @foreach($tinggi_chars as $t) <div class="kotak-sambung">{{ $t }}</div> @endforeach <span class="small-unit">cm</span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-label-L">TEMPAT LAHIR</td>
-                <td class="col-input-L">
-                    @foreach($tempat_chars as $t) <div class="kotak">{{ $t }}</div> @endforeach
-                </td>
-                <td class="col-label-R">TANGGAL LAHIR</td>
-                <td class="col-input-R">
-                    @foreach($tgl_lahir_chars as $t) <div class="kotak-sambung">{{ $t }}</div> @endforeach
-                </td>
-            </tr>
-            <tr>
-                <td class="col-label-L">NOMOR KTP / NIK</td>
-                <td class="col-input-L">
-                    @foreach($nik_chars as $n) <div class="kotak">{{ $n }}</div> @endforeach
-                </td>
-                <td class="col-label-R" style="font-size:9px;">TGL DIBERLAKUKAN</td>
-                <td class="col-input-R">
-                    @foreach($tgl_berlaku_chars as $t) <div class="kotak-sambung">{{ $t }}</div> @endforeach
-                </td>
-            </tr>
-            <tr>
-                <td class="col-label-L">TEMPAT DIKELUARKAN</td>
-                <td class="col-input-L">
-                    @foreach($tempat_keluar_chars as $t) <div class="kotak">{{ $t }}</div> @endforeach
-                </td>
-                <td class="col-label-R">BERLAKU S/D</td>
-                <td class="col-input-R">
-                    @foreach($tgl_habis_chars as $t) <div class="kotak-sambung">{{ $t }}</div> @endforeach
-                </td>
-            </tr>
-        </table>
-
-        <table class="layout">
-            <tr>
-                <td class="col-label-L">PEKERJAAN</td>
-                <td colspan="3"> @foreach($pekerjaan_chars as $char) 
-                        <div class="kotak">{{ $char }}</div> 
-                    @endforeach
-                </td>
-            </tr>
-            
-            <tr>
-                <td class="col-label-L" style="vertical-align: top;">ALAMAT TINGGAL</td>
-                <td colspan="3">
-                    <div style="margin-bottom: 2px;">
-                        @foreach(array_slice($alamat_chars, 0, 35) as $char) 
-                            <div class="kotak">{{ $char }}</div> 
-                        @endforeach
-                    </div>
-                    
-                    <div>
-                        @foreach(array_slice($alamat_chars, 35, 35) as $char) 
-                            <div class="kotak">{{ $char }}</div> 
-                        @endforeach
-                    </div>
-                    
-                    </td>
-            </tr>
-        </table>
-    </div>
+    <div class="text-center bold" style="text-decoration: underline; font-size: 12px; margin: 10px 0;">
+        FORMULIR SURAT PERJALANAN REPUBLIK INDONESIA<br>UNTUK WARGA NEGARA INDONESIA
     </div>
     
+    <div style="font-size: 8px; border: 1px solid #000; padding: 3px; margin-bottom: 3px;">
+        <strong>PERHATIAN:</strong> 1. Isi formulir dengan HURUF CETAK dan TINTA HITAM. 2. Tanda asterisk (*) berarti diisi sesuai nomor pilihan.
+    </div>
+
+    <table class="form-layout">
+        <tr style="background: #f9f9f9;">
+            <td colspan="4">
+                <span class="f-label" style="display:inline; margin-right: 15px;">PERMOHONAN *</span>
+                <span class="chk">X</span> <span style="font-size: 9px;">Baru</span> &nbsp; 
+                <span class="chk">&nbsp;</span> <span style="font-size: 9px;">Penggantian</span> &nbsp;
+                <span class="chk">&nbsp;</span> <span style="font-size: 9px;">Perubahan</span>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="3" class="border-right" style="width: 75%;">
+                <span class="f-label">NAMA LENGKAP</span>
+                <div class="box-row">@foreach($nama_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div>
+            </td>
+            <td>
+                <span class="f-label">JENIS KELAMIN *</span>
+                <span class="chk">{{ $jk=='L'?'X':'' }}</span> L &nbsp;
+                <span class="chk">{{ $jk=='P'?'X':'' }}</span> P
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="3" class="border-right">
+                <span class="f-label">NAMA LAIN (ALIAS) **</span>
+                <div class="box-row">@for($i=0;$i<25;$i++)<div class="k">&nbsp;</div>@endfor</div>
+            </td>
+            <td>
+                <span class="f-label">TINGGI BADAN</span>
+                @foreach($tinggi_chars as $t)<div class="k">{{ $t }}</div>@endforeach cm
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2" class="border-right" style="width: 60%;">
+                <span class="f-label">TEMPAT LAHIR</span>
+                <div class="box-row">@foreach($tempat_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div>
+            </td>
+            <td colspan="2">
+                <div class="label-with-dot">
+                    <span class="dot"></span><span class="label-text">TANGGAL LAHIR</span>
+                </div>
+                <div class="box-row">@foreach($tgl_lahir_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2" class="border-right">
+                <span class="f-label">NOMOR KTP WNI</span>
+                <div class="box-row">@foreach($nik_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div>
+            </td>
+            <td colspan="2">
+                <div class="label-with-dot">
+                    <span class="dot"></span><span class="label-text">TGL DIBERLAKUKAN</span>
+                </div>
+                <div class="box-row">@foreach($tgl_berlaku_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2" class="border-right">
+                <span class="f-label">TEMPAT DIKELUARKAN</span>
+                <div class="box-row">@foreach($tempat_keluar_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div>
+            </td>
+            <td colspan="2">
+                <div class="label-with-dot">
+                    <span class="dot"></span><span class="label-text">BERLAKU S/D</span>
+                </div>
+                <div class="box-row">@foreach($tgl_habis_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div>
+            </td>
+        </tr>
+
+        <tr class="no-border-bottom">
+            <td colspan="4" style="padding-bottom: 0;">
+                <span class="f-label">NAMA DAN ALAMAT KANTOR / PEKERJAAN ***</span>
+                <div class="box-row">@foreach($pekerjaan_1_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4" style="padding-top: 2px;">
+                <div class="box-row">
+                    @foreach($pekerjaan_2_chars as $c)<div class="k">{{ $c }}</div>@endforeach
+                    <span style="font-size: 9px; font-weight: bold; margin: 0 8px;">TELP / HP</span>
+                    @foreach($telp_chars as $c)<div class="k">{{ $c }}</div>@endforeach
+                </div>
+            </td>
+        </tr>
+
+        <tr class="no-border-bottom">
+            <td colspan="4" style="padding-bottom: 0;">
+                <span class="f-label">ALAMAT TEMPAT TINGGAL</span>
+                <div class="box-row">@foreach($alamat_1_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4" style="padding-top: 2px;">
+                <div class="box-row">
+                    @foreach($alamat_2_chars as $c)<div class="k">{{ $c }}</div>@endforeach
+                    <span style="font-size: 9px; font-weight: bold; margin: 0 8px;">TELP / HP</span>
+                    @foreach($telp_chars as $c)<div class="k">{{ $c }}</div>@endforeach
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="4">
+                <span class="f-label">ALAMAT EMAIL</span>
+                <div class="box-row">@foreach($email_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="4">
+                <span class="f-label">NAMA IBU</span>
+                <div class="box-row">@foreach($ibu_nama_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <span class="f-label">KEWARGANEGARAAN</span>
+                <div class="box-row">@foreach($ibu_warga_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="border-right">
+                <span class="f-label">TEMPAT LAHIR</span>
+                <div class="box-row">@foreach($ibu_tempat_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div>
+            </td>
+            <td colspan="2">
+                <div class="label-with-dot">
+                    <span class="dot"></span><span class="label-text">TANGGAL LAHIR</span>
+                </div>
+                <div class="box-row">@foreach($ibu_tgl_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="4">
+                <span class="f-label">NAMA AYAH</span>
+                <div class="box-row">@foreach($ayah_nama_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <span class="f-label">KEWARGANEGARAAN</span>
+                <div class="box-row">@foreach($ayah_warga_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="border-right">
+                <span class="f-label">TEMPAT LAHIR</span>
+                <div class="box-row">@foreach($ayah_tempat_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div>
+            </td>
+            <td colspan="2">
+                <div class="label-with-dot">
+                    <span class="dot"></span><span class="label-text">TANGGAL LAHIR</span>
+                </div>
+                <div class="box-row">@foreach($ayah_tgl_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div>
+            </td>
+        </tr>
+
+        <tr class="no-border-bottom">
+            <td colspan="4" style="padding-bottom: 0;">
+                <span class="f-label">ALAMAT ORANG TUA</span>
+                <div class="box-row">@foreach($ortu_alamat_1_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4" style="padding-top: 2px;">
+                <div class="box-row">
+                    @foreach($ortu_alamat_2_chars as $c)<div class="k">{{ $c }}</div>@endforeach
+                    <span style="font-size: 9px; font-weight: bold; margin: 0 8px;">TELP / HP</span>
+                    @for($i=0;$i<12;$i++)<div class="k">&nbsp;</div>@endfor
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="4">
+                <span class="f-label">NAMA SUAMI / ISTRI</span>
+                <div class="box-row">@foreach($pasangan_nama_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <span class="f-label">KEWARGANEGARAAN</span>
+                <div class="box-row">@foreach($pasangan_warga_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="border-right">
+                <span class="f-label">TEMPAT LAHIR</span>
+                <div class="box-row">@foreach($pasangan_tempat_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div>
+            </td>
+            <td colspan="2">
+                <div class="label-with-dot">
+                    <span class="dot"></span><span class="label-text">TANGGAL LAHIR</span>
+                </div>
+                <div class="box-row">@foreach($pasangan_tgl_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div>
+            </td>
+        </tr>
+    </table>
+
     <div class="page-break"></div>
 
 
     <div class="header-wrapper">
-        <div class="instansi">{{ $kop_instansi }}<br>KANTOR IMIGRASI WONOSOBO</div>
-        <div style="font-size: 9px; text-align: center;">Jalan Raya Banyumas km 5,5 Selomerto Wonosobo</div>
+        <div class="instansi">{{ $kop_instansi ?? 'KEMENTERIAN HUKUM DAN HAM' }}<br>KANTOR IMIGRASI WONOSOBO</div>
+        <div style="font-size: 9px; text-align: center; clear:both; padding-top: 5px;">Jalan Raya Banyumas km 5,5 Selomerto Wonosobo</div>
     </div>
     <div class="garis-kop"></div>
 
@@ -176,17 +327,17 @@
 
     <p>Dengan ini menyatakan dengan sebenarnya bahwa :</p>
 
-    <ol class="list-numbered">
-        <li>Saya belum/sudah* mempunyai Paspor RI atau Dokumen Perjalanan RI lainnya;</li>
-        <li>Semua surat atau dokumen yang saya lampirkan adalah benar milik saya dan sah secara hukum;</li>
-        <li>Tujuan saya mengurus paspor adalah untuk <b>{{ $tujuan }}</b>;</li>
-        <li>Saya tidak akan bekerja secara illegal di luar negeri/menjadi TKI NON PROSEDURAL;</li>
-        <li>Apabila permohonan saya Ditolak Sistem/Wawancara, saya tidak akan menuntut pengembalian biaya paspor;</li>
-        <li>Segala keterangan yang saya berikan adalah benar dan dapat dipertanggungjawabkan secara hukum.</li>
+    <ol style="padding-left: 20px; margin: 5px 0;">
+        <li style="margin-bottom: 5px;">Saya belum/sudah* mempunyai Paspor RI atau Dokumen Perjalanan RI lainnya;</li>
+        <li style="margin-bottom: 5px;">Semua surat atau dokumen yang saya lampirkan adalah benar milik saya dan sah secara hukum;</li>
+        <li style="margin-bottom: 5px;">Tujuan saya mengurus paspor adalah untuk <b>{{ $tujuan }}</b>;</li>
+        <li style="margin-bottom: 5px;">Saya tidak akan bekerja secara illegal di luar negeri/menjadi TKI NON PROSEDURAL;</li>
+        <li style="margin-bottom: 5px;">Apabila permohonan saya Ditolak Sistem/Wawancara, saya tidak akan menuntut pengembalian biaya paspor;</li>
+        <li style="margin-bottom: 5px;">Segala keterangan yang saya berikan adalah benar dan dapat dipertanggungjawabkan secara hukum.</li>
     </ol>
 
     <br>
-    <div style="float: right;" class="ttd-block">
+    <div class="ttd-area">
         Wonosobo, {{ $tgl_ttd }}<br>
         Yang Membuat Pernyataan,<br>
         <div class="materai-box">Materai<br>Rp10.000</div>
@@ -198,7 +349,7 @@
 
 
     <div class="header-wrapper">
-        <div class="instansi">{{ $kop_instansi }}<br>KANTOR IMIGRASI WONOSOBO</div>
+        <div class="instansi">{{ $kop_instansi ?? 'KEMENTERIAN HUKUM DAN HAM' }}<br>KANTOR IMIGRASI WONOSOBO</div>
     </div>
     <div class="garis-kop"></div>
 
@@ -243,18 +394,17 @@
         </tr>
     </table>
 
-
     @if($cetak_surat_ortu)
     
     <div class="page-break"></div>
 
     <div class="header-wrapper">
-        <div class="instansi">{{ $kop_instansi }}<br>KANTOR IMIGRASI WONOSOBO</div>
+        <div class="instansi">{{ $kop_instansi ?? 'KEMENTERIAN HUKUM DAN HAM' }}<br>KANTOR IMIGRASI WONOSOBO</div>
     </div>
     <div class="garis-kop"></div>
 
     <h3 class="text-center" style="text-decoration: underline;">SURAT PERNYATAAN ORANG TUA</h3>
-    <p class="text-center" style="margin-top: -10px; font-style: italic;">(Untuk Permohonan Paspor Anak Dibawah Umur)</p>
+    <p class="text-center" style="margin-top: -10px; font-style: italic;">(Untuk Permohonan Paspor Anak)</p>
 
     <br>
     <p>Yang bertanda tangan di bawah ini:</p>
@@ -277,13 +427,12 @@
     <p class="text-justify">
         Dengan ini menyatakan sesungguhnya bahwa kami menyetujui anak kami tersebut untuk membuat Paspor RI
         dan akan bertanggung jawab sepenuhnya atas keberangkatan dan kepulangan anak kami, 
-        serta menanggung segala biaya yang timbul. Apabila dikemudian hari keterangan ini tidak benar, 
-        kami bersedia dituntut sesuai dengan hukum yang berlaku.
+        serta menanggung segala biaya yang timbul.
     </p>
 
     <br>
     
-    <div style="float: right;" class="ttd-block">
+    <div class="ttd-area">
         Wonosobo, {{ $tgl_ttd }}<br>
         Yang Membuat Pernyataan,<br>
         <div class="materai-box">Materai<br>Rp 10.000</div>
@@ -291,7 +440,7 @@
         ( <b>{{ $ayah_nama }}</b> )
     </div>
     
-    <div style="float: left;" class="ttd-block">
+    <div class="ttd-left">
         <br>Mengetahui,<br>Ibu Kandung<br><br><br><br><br>
         ( <b>{{ $ibu_nama }}</b> )
     </div>
