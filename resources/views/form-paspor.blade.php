@@ -49,6 +49,18 @@
                         <div class="form-section current" id="section1">
                             <h5 class="text-primary mb-3 border-bottom pb-2">A. Identitas Pemohon</h5>
                             
+                            <div class="alert alert-info py-2 mb-3">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="buat_surat_ortu" name="buat_surat_ortu" value="1" onchange="toggleAnak()">
+                                    <label class="form-check-label fw-bold" for="buat_surat_ortu">
+                                        Pemohon Adalah Anak Dibawah Umur (Belum Punya KTP)
+                                    </label>
+                                </div>
+                                <div class="text-muted small mt-1 ms-4" id="info-anak" style="display:none;">
+                                    * Surat Pernyataan Orang Tua akan otomatis dibuatkan di halaman akhir PDF.
+                                </div>
+                            </div>
+
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label">Nama Lengkap</label>
@@ -310,6 +322,14 @@
         const box = document.getElementById('box-pasangan');
         if(val === '1') { box.style.display = 'block'; } 
         else { box.style.display = 'none'; }
+    }
+
+    function toggleAnak() {
+        const isChild = document.getElementById('buat_surat_ortu').checked;
+        const info = document.getElementById('info-anak');
+        // Tampilkan info tambahan
+        if(isChild) { info.style.display = 'block'; } 
+        else { info.style.display = 'none'; }
     }
 </script>
 </body>
