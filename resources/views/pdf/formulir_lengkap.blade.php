@@ -1,451 +1,225 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Formulir Paspor Lengkap</title>
+    <title>Berkas Paspor Lengkap Final Logo</title>
     <style>
         /* --- GLOBAL --- */
-        body { font-family: Arial, Helvetica, sans-serif; font-size: 10px; padding: 20px 30px; }
-        .page-break { page-break-after: always; }
+        @page { margin: 0px; }
+        body { font-family: Arial, Helvetica, sans-serif; font-size: 9px; margin: 15px 30px; }
+        .bold { font-weight: bold; }
         .text-center { text-align: center; }
         .text-justify { text-align: justify; }
-        .bold { font-weight: bold; }
         .uppercase { text-transform: uppercase; }
 
-        /* --- HEADER HALAMAN 1 --- */
-        .header-wrapper { height: 50px; margin-bottom: 5px; }
-        .instansi { float: left; font-weight: bold; font-size: 10px; line-height: 1.2; }
-        .nomor-perdim { float: right; font-weight: bold; font-size: 11px; text-align: right; }
-        .clear { clear: both; }
+        /* --- HEADER & PERDIM --- */
+        table.header-table { width: 100%; border: none; margin-bottom: 2px; }
+        table.header-table td { vertical-align: top; padding: 0; }
+        .instansi { font-weight: bold; font-size: 10px; line-height: 1.1; }
+        .perdim-info { font-weight: bold; font-size: 11px; line-height: 1.1; }
+        .square-mark { width: 10px; height: 10px; background-color: #000; display: inline-block; }
+        .judul-form { text-align: center; font-weight: bold; font-size: 11px; margin-top: 5px; text-decoration: underline; }
+        .sub-judul { text-align: center; font-weight: bold; font-size: 11px; margin-bottom: 5px; }
+        .box-perhatian { border: 1px solid #000; padding: 5px 8px; font-size: 7.5px; margin-bottom: 5px; line-height: 1.3; background: #fff; }
+        .list-perhatian { margin: 0; padding-left: 12px; }
+        .k-ex { display: inline-block; width: 12px; height: 12px; border: 1px solid #000; margin-right: 1px; background: #fff; text-align: center; line-height: 11px; font-weight: bold; }
+        table.main-layout { width: 100%; border-collapse: collapse; border: 2px solid #000; }
+        .col-num { width: 15px; text-align: center; font-weight: bold; vertical-align: top; padding-top: 5px; border-right: 1px solid #000; border-bottom: 1px solid #000; }
+        table.grid-data { width: 100%; border-collapse: collapse; }
+        table.grid-data td { padding: 2px 3px; vertical-align: top; border-bottom: 1px solid #000; height: 32px; }
+        table.grid-data tr:last-child td { border-bottom: none; }
+        .v-border { border-right: 1px solid #000; }
+        .f-label { font-size: 7px; color: #444; font-weight: bold; text-transform: uppercase; display: block; margin-bottom: 2px; }
+        .k { display: inline-block; width: 11px; height: 12px; border: 1px solid #000; text-align: center; line-height: 11px; font-size: 9px; font-weight: bold; margin-right: 1px; background: #fff; vertical-align: middle; }
+        .k-sambung { display: inline-block; width: 11px; height: 12px; border: 1px solid #000; text-align: center; line-height: 11px; font-size: 9px; font-weight: bold; margin-right: -1px; background: #fff; vertical-align: middle;}
+        .chk { display: inline-block; width: 10px; height: 10px; border: 1px solid #000; margin-right: 2px; vertical-align: middle; text-align:center; line-height:9px; font-size:8px;}
+        .black-dot { display: inline-block; width: 5px; height: 5px; background-color: #000; margin-right: 3px; margin-bottom: 2px; }
+        .telp-lbl { font-size: 8px; font-weight: bold; margin: 0 5px; }
+        .unit { font-size: 8px; margin-left: 2px; }
+        .opt-row { margin-bottom: 2px; font-size: 8px; font-weight: bold; }
+        .box-num { display: inline-block; width: 14px; height: 14px; border: 1px solid #000; vertical-align: middle; text-align: center; line-height: 14px; font-size: 10px; font-weight: bold; margin-left: 5px; background-color: #fff; }
+        .list-syarat { list-style: none; padding: 0; margin: 0; font-size: 8px; }
+        .list-syarat li { margin-bottom: 3px; }
+        .chk-box { display: inline-block; width: 12px; height: 12px; border: 1px solid #000; vertical-align: middle; margin-right: 5px; background: #fff;}
+        .dotted-line { border-bottom: 1px dotted #000; display: inline-block; }
 
-        /* --- TABEL UTAMA (LAYOUT FORM) --- */
-        table.form-layout { 
-            width: 100%; 
-            border-collapse: collapse; 
-            border: 2px solid #000; /* Bingkai Luar Tebal */
-        }
+        /* --- STYLES SURAT PERNYATAAN & WAWANCARA --- */
+        .kop-surat { width: 100%; border-bottom: 3px double #000; margin-bottom: 10px; padding-bottom: 5px; margin-top: 20px; }
+        .kop-logo { width: 70px; text-align: center; vertical-align: top; padding-top: 5px; } /* Disesuaikan untuk gambar */
+        .kop-text { text-align: center; font-family: Arial, Helvetica, sans-serif; }
+        .kop-text h1 { font-size: 12px; margin: 0; font-weight: bold; }
+        .kop-text h2 { font-size: 11px; margin: 0; font-weight: bold; }
+        .kop-text h3 { font-size: 14px; margin: 2px 0; font-weight: bold; }
+        .kop-text p { font-size: 8px; margin: 0; }
         
-        /* Baris Biasa (Garis Bawah Tipis) */
-        table.form-layout tr { border-bottom: 1px solid #000; }
+        .legal-block { margin-bottom: 10px; font-size: 8.5px; text-align: justify; }
+        .legal-title { font-weight: bold; margin-bottom: 3px; }
         
-        /* Sel Biasa (Tanpa Kotak, Padding Rapi) */
-        table.form-layout td { 
-            padding: 3px 5px; 
-            vertical-align: top;
-        }
-
-        /* Garis Pemisah Vertikal (Untuk memisah Kiri/Kanan) */
-        .border-right { border-right: 1px solid #000; }
-
-        /* Hapus Border Bawah (Untuk Baris Split seperti Alamat) */
-        .no-border-bottom { border-bottom: none !important; }
-        .no-border-top { border-top: none !important; }
-
-        /* LABEL & INPUT */
-        .f-label {
-            font-size: 8px; font-weight: bold; color: #555;
-            text-transform: uppercase; margin-bottom: 1px; display: block;
-        }
+        .judul-surat { text-align: center; text-decoration: underline; font-weight: bold; font-size: 12px; margin: 15px 0; }
         
-        /* Label dengan Titik Hitam */
-        .label-with-dot { display: block; margin-bottom: 1px; }
-        .dot { display: inline-block; width: 8px; height: 8px; background: #000; margin-right: 4px; vertical-align: middle; }
-        .label-text { font-size: 8px; font-weight: bold; color: #555; text-transform: uppercase; vertical-align: middle; }
-
-        /* KOTAK ISIAN */
-        .box-row { margin-top: 1px; white-space: nowrap; }
-        .k { 
-            display: inline-block; width: 13px; height: 14px; 
-            border: 1px solid #000; text-align: center; 
-            line-height: 13px; font-size: 10px; font-weight: bold; 
-            margin-right: 1px; vertical-align: middle;
-        }
-        .k-sambung { 
-            display: inline-block; width: 13px; height: 14px; 
-            border: 1px solid #000; text-align: center; 
-            line-height: 13px; font-size: 10px; font-weight: bold; 
-            margin-right: -1px; vertical-align: middle;
-        }
+        .table-isian { width: 100%; font-size: 9px; border-collapse: collapse; margin-bottom: 5px; }
+        .table-isian td { padding: 3px 0; vertical-align: top; }
+        .dots-fill { border-bottom: 1px dotted #000; }
         
-        /* CHECKBOX */
-        .chk { display: inline-block; width: 12px; height: 12px; border: 1px solid #000; text-align: center; line-height: 11px; font-size: 9px; vertical-align: middle; }
-
-        /* --- STYLES SURAT TEXT (Pernyataan & Wawancara) --- */
-        table.plain-table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
-        table.plain-table td { vertical-align: top; padding: 4px 0; font-size: 11px; border: none; }
-        .isian-text { font-weight: bold; font-size: 11px; text-transform: uppercase; }
-        .border-dots { border-bottom: 1px dotted #000; }
-        .materai-box { border: 1px solid #ccc; width: 60px; height: 30px; margin: 10px auto; font-size: 8px; padding-top: 10px; text-align: center; }
-        .ttd-area { width: 250px; text-align: center; float: right; }
-        .ttd-left { width: 250px; text-align: center; float: left; }
+        /* STYLE KHUSUS WAWANCARA */
+        .wawancara-dots { border-bottom: 1px dotted #000; display: block; margin-top: 15px; height: 12px; }
+        .wawancara-label { margin-top: 10px; margin-bottom: 2px; display: block; font-size: 9px; }
+        
+        .materai-box { border: 1px solid #ccc; width: 70px; height: 35px; margin: 5px auto; padding-top: 10px; text-align: center; font-size: 8px; color:#999; }
+        .ttd-area-surat { float: right; width: 220px; text-align: center; margin-top: 20px; }
     </style>
 </head>
 <body>
 
-    <div class="header-wrapper">
-        <div class="instansi">
-            KEMENTERIAN HUKUM DAN HAK ASASI MANUSIA RI<br>
-            KANTOR WILAYAH DEP. HUKUM DAN HAM JAWA TENGAH<br>
-            KANTOR IMIGRASI WONOSOBO
-        </div>
-        <div class="nomor-perdim">
-            PERDIM : 11<br>NO: ....................
-        </div>
-        <div class="clear"></div>
-    </div>
+    <table class="header-table"><tr><td width="5%"><div class="square-mark"></div></td><td width="55%"><div class="instansi">KEMENTERIAN HUKUM DAN HAK ASASI MANUSIA RI<br>KANTOR WILAYAH DEP. HUKUM DAN HAM JAWA TENGAH<br>KANTOR IMIGRASI WONOSOBO</div></td><td width="35%"><div class="perdim-info">PERDIM : 11<br>NO : ....................</div></td><td width="5%" align="right"><div class="square-mark"></div></td></tr></table>
+    <div class="judul-form">FORMULIR SURAT PERJALANAN REPUBLIK INDONESIA</div><div class="sub-judul">UNTUK WARGA NEGARA INDONESIA</div>
+    <div class="box-perhatian"><div style="font-weight:bold; text-align:center; margin-bottom:2px;">PERHATIAN</div><ol class="list-perhatian"><li>Isi formulir dengan HURUF CETAK...</li><li>Tanda asterisk berarti...</li><li>Lampirkan dokumen...</li><li>Pemohon Wajib...</li><li>Formulir ini tidak...</li><li>Jika dalam pengisian...</li><li>Cara pengisian tanggal... CONTOH : 26 Januari 2008 &nbsp;&nbsp; <span class="k-ex">2</span><span class="k-ex">6</span> &nbsp; <span class="k-ex">0</span><span class="k-ex">1</span> &nbsp; <span class="k-ex">0</span><span class="k-ex">8</span></li></ol></div>
+    <table class="main-layout">
+        <tr><td class="col-num" style="border-bottom: 1px solid #000;">1</td><td style="padding:0; border-bottom: 1px solid #000;"><table style="width:100%; border-collapse:collapse;"><tr><td width="70%" style="border-right: 1px solid #000; padding: 4px; vertical-align:top;"><div class="f-label">PERMOHONAN *</div><div style="margin-bottom:2px;">A. BARU * &nbsp;&nbsp; <span class="chk"></span> 1. Paspor Biasa Non Elektronik &nbsp;&nbsp; <span class="chk"></span> 2. Elektronik</div><div style="margin-bottom:2px;">B. PENGGANTIAN * &nbsp; <span class="chk"></span> 1. Habis Berlaku &nbsp; <span class="chk"></span> 2. Halaman Penuh &nbsp; <span class="chk"></span> 3. Hilang</div><div>C. PERUBAHAN * &nbsp;&nbsp; <span class="chk"></span> 1. Nama &nbsp;&nbsp; 2. Alamat &nbsp;&nbsp; 3. Lain-lain</div></td><td width="30%" style="vertical-align:top; padding: 4px;"><div style="text-align:center; font-weight:bold; font-size:8px; margin-bottom:5px;">TGL PERMOHONAN</div><div style="text-align:center;">@for($i=0;$i<8;$i++)<div class="k">&nbsp;</div>@endfor</div></td></tr></table></td></tr>
+        <tr><td class="col-num" style="border-bottom:none;">2</td><td style="padding:0;">
+            <table class="grid-data">
+                <tr><td width="65%" class="v-border"><span class="f-label">NAMA LENGKAP</span><div>@foreach($nama_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div></td><td width="35%"><span class="f-label">JENIS KELAMIN *</span><div style="margin-top: 5px;"><span class="chk">{{ $jk=='L'?'X':'' }}</span> 1. L &nbsp;&nbsp;&nbsp;&nbsp; <span class="chk">{{ $jk=='P'?'X':'' }}</span> 2. P</div></td></tr>
+                <tr><td class="v-border"><span class="f-label">NAMA LAIN (ALIAS) **</span><div>@foreach($alias_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div></td><td><span class="f-label">TINGGI BADAN</span><div>@foreach($tinggi_chars as $t)<div class="k">{{ $t }}</div>@endforeach <span class="unit">cm</span></div></td></tr>
+                <tr><td class="v-border"><span class="f-label">TEMPAT LAHIR</span><div>@foreach($tempat_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div></td><td><span class="f-label"><span class="black-dot"></span>TANGGAL LAHIR</span><div>@foreach($tgl_lahir_chars as $c)<div class="k-sambung">{{ $c }}</div>@endforeach</div></td></tr>
+                <tr><td class="v-border"><span class="f-label">NOMOR KTP WNI</span><div>@foreach($nik_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div></td><td><span class="f-label"><span class="black-dot"></span>TGL DIBERLAKUKAN</span><div>@foreach($tgl_berlaku_chars as $c)<div class="k-sambung">{{ $c }}</div>@endforeach</div></td></tr>
+                <tr><td class="v-border"><span class="f-label">TEMPAT DIKELUARKAN</span><div>@foreach($tempat_keluar_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div></td><td><span class="f-label"><span class="black-dot"></span>BERLAKU S/D</span><div>@foreach($tgl_habis_chars as $c)<div class="k-sambung">{{ $c }}</div>@endforeach</div></td></tr>
+                <tr><td colspan="2"><span class="f-label">NAMA DAN ALAMAT KANTOR / PEKERJAAN ***</span><div style="margin-bottom: 2px;">@foreach($pekerjaan_1_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div><div>@foreach($pekerjaan_2_chars as $c)<div class="k">{{ $c }}</div>@endforeach <span class="telp-lbl">TELP / HP</span> @foreach($telp_kantor_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div></td></tr>
+                <tr><td colspan="2"><span class="f-label">ALAMAT TEMPAT TINGGAL</span><div style="margin-bottom: 2px;">@foreach($alamat_1_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div><div>@foreach($alamat_2_chars as $c)<div class="k">{{ $c }}</div>@endforeach <span class="telp-lbl">TELP / HP</span> @foreach($telp_rumah_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div></td></tr>
+                <tr><td colspan="2"><span class="f-label">ALAMAT EMAIL</span><div>@foreach($email_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div></td></tr>
+                <tr><td colspan="2"><span class="f-label">NAMA IBU</span><div>@foreach($ibu_nama_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div></td></tr>
+                <tr><td colspan="2"><span class="f-label">KEWARGANEGARAAN</span><div>@foreach($ibu_warga_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div></td></tr>
+                <tr><td class="v-border"><span class="f-label">TEMPAT LAHIR</span><div>@foreach($ibu_tempat_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div></td><td><span class="f-label"><span class="black-dot"></span>TANGGAL LAHIR</span><div>@foreach($ibu_tgl_chars as $c)<div class="k-sambung">{{ $c }}</div>@endforeach</div></td></tr>
+                <tr><td colspan="2"><span class="f-label">NAMA AYAH</span><div>@foreach($ayah_nama_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div></td></tr>
+                <tr><td colspan="2"><span class="f-label">KEWARGANEGARAAN</span><div>@foreach($ayah_warga_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div></td></tr>
+                <tr><td class="v-border"><span class="f-label">TEMPAT LAHIR</span><div>@foreach($ayah_tempat_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div></td><td><span class="f-label"><span class="black-dot"></span>TANGGAL LAHIR</span><div>@foreach($ayah_tgl_chars as $c)<div class="k-sambung">{{ $c }}</div>@endforeach</div></td></tr>
+                <tr><td colspan="2"><span class="f-label">ALAMAT ORANG TUA</span><div style="margin-bottom: 2px;">@foreach($ortu_alamat_1_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div><div>@foreach($ortu_alamat_2_chars as $c)<div class="k">{{ $c }}</div>@endforeach <span class="telp-lbl">TELP / HP</span> @foreach($telp_ortu_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div></td></tr>
+                <tr><td colspan="2"><span class="f-label">NAMA SUAMI / ISTRI</span><div>@foreach($pasangan_nama_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div></td></tr>
+                <tr><td colspan="2"><span class="f-label">KEWARGANEGARAAN</span><div>@foreach($pasangan_warga_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div></td></tr>
+                <tr><td class="v-border"><span class="f-label">TEMPAT LAHIR</span><div>@foreach($pasangan_tempat_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div></td><td><span class="f-label"><span class="black-dot"></span>TANGGAL LAHIR</span><div>@foreach($pasangan_tgl_chars as $c)<div class="k-sambung">{{ $c }}</div>@endforeach</div></td></tr>
+            </table>
+        </td></tr>
+    </table>
 
-    <div class="text-center bold" style="text-decoration: underline; font-size: 12px; margin: 10px 0;">
-        FORMULIR SURAT PERJALANAN REPUBLIK INDONESIA<br>UNTUK WARGA NEGARA INDONESIA
-    </div>
-    
-    <div style="font-size: 8px; border: 1px solid #000; padding: 3px; margin-bottom: 3px;">
-        <strong>PERHATIAN:</strong> 1. Isi formulir dengan HURUF CETAK dan TINTA HITAM. 2. Tanda asterisk (*) berarti diisi sesuai nomor pilihan.
-    </div>
+    <div style="page-break-before: always;"></div>
 
-    <table class="form-layout">
-        <tr style="background: #f9f9f9;">
-            <td colspan="4">
-                <span class="f-label" style="display:inline; margin-right: 15px;">PERMOHONAN *</span>
-                <span class="chk">X</span> <span style="font-size: 9px;">Baru</span> &nbsp; 
-                <span class="chk">&nbsp;</span> <span style="font-size: 9px;">Penggantian</span> &nbsp;
-                <span class="chk">&nbsp;</span> <span style="font-size: 9px;">Perubahan</span>
-            </td>
-        </tr>
+    <table class="main-layout" style="margin-top: 20px;">
+        <tr><td class="col-num" style="border-bottom: 1px solid #000;">3</td><td style="padding:0; border-bottom: 1px solid #000;"><table style="width:100%; border-collapse:collapse;"><tr><td width="55%" style="border-right:1px solid #000; padding:4px; vertical-align:top;"><div class="f-label">PEKERJAAN * &nbsp; <span class="box-num">{{ $pekerjaan_id }}</span></div><div class="opt-row">1. PEJABAT NEGARA &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4. PEGAWAI SWASTA</div><div class="opt-row">2. PEGAWAI NEGERI SIPIL &nbsp; 5. LAINNYA : {{ $pekerjaan_lainnya }}</div><div class="opt-row">3. TNI / POLRI</div></td><td width="45%" style="padding:4px; vertical-align:top;"><div class="f-label">STATUS SIPIL * &nbsp; <span class="box-num">{{ $status_sipil_id }}</span></div><div class="opt-row">1. KAWIN &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3. CERAI MATI</div><div class="opt-row">2. TIDAK KAWIN &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4. CERAI HIDUP</div></td></tr></table></td></tr>
+        <tr><td class="col-num" style="border-bottom: 1px solid #000;">4</td><td style="padding:5px; border-bottom: 1px solid #000;"><div style="text-align:justify; font-size:8px; line-height:1.2; margin-bottom:10px;">Seluruh keterangan...</div><table style="width:100%; font-size:8px; border-collapse:collapse;"><tr><td width="35%" valign="bottom">Tanda tangan yang diberi kuasa,<br><br><br><br></td><td width="30%"></td><td width="35%" align="right" valign="bottom">Tanda tangan pemohon,<br><br><br><br></td></tr><tr><td valign="middle" style="padding: 2px 0;">Nama &nbsp; @foreach($nama_ambil_1_chars as $c)<div class="k">{{ $c }}</div>@endforeach</td><td></td><td align="right" valign="bottom"><span class="dotted-line" style="width:150px;"></span></td></tr><tr><td colspan="3" style="padding: 10px 0;">Paspor diterima pada tanggal : &nbsp; @for($i=0;$i<8;$i++)<div class="k">&nbsp;</div>@endfor</td></tr><tr><td valign="bottom">Tanda tangan penerima,<br><br><br><br></td><td></td><td align="right" valign="bottom">Petugas yang menyerahkan,<br><br><br><br></td></tr><tr><td valign="middle" style="padding: 2px 0;">Nama &nbsp; @foreach($nama_ambil_2_chars as $c)<div class="k">{{ $c }}</div>@endforeach</td><td></td><td align="right" valign="bottom"><span class="dotted-line" style="width:150px;"></span></td></tr></table></td></tr>
+        <tr><td class="col-num" style="border-bottom: 1px solid #000;">5</td><td style="padding:0; border-bottom: 1px solid #000;"><table style="width:100%; border-collapse:collapse;"><tr><td width="50%" style="border-right:1px solid #000; padding:4px; vertical-align:top;"><div class="f-label bold">CATATAN PETUGAS LOKET</div><div style="font-size:8px;">Lampiran persyaratan :</div><ul class="list-syarat"><li><span class="chk-box"></span> Copy KTP WNI</li><li><span class="chk-box"></span> Copy Kartu Keluarga</li><li><span class="chk-box"></span> Copy Akte Kelahiran...</li><li><span class="chk-box"></span> Paspor / SPLP Lama</li><li><span class="chk-box"></span> Surat Keterangan Hilang...</li><li><span class="chk-box"></span> Surat Rekomendasi...</li><li><span class="chk-box"></span> Surat Kuasa...</li></ul><div style="text-align:right; margin-top:20px; padding-right:10px;"><div style="margin-bottom:25px; font-size:8px;">Paraf Petugas</div><span class="dotted-line" style="width:80px;"></span></div></td><td width="50%" style="padding:4px; vertical-align:top;"><div class="f-label bold">CATATAN PETUGAS WAWANCARA</div><div style="font-size:8px; margin-bottom:15px; margin-top:5px;">1. <span class="dotted-line" style="width:90%;"></span></div><div style="font-size:8px; margin-bottom:15px;">2. <span class="dotted-line" style="width:90%;"></span></div><div style="font-size:8px; margin-bottom:30px;">3. <span class="dotted-line" style="width:90%;"></span></div><div style="text-align:right; margin-top:10px; padding-right:10px;"><div style="margin-bottom:25px; font-size:8px;">Paraf Pejim,</div><span class="dotted-line" style="width:80px;"></span></div></td></tr></table></td></tr>
+        <tr><td class="col-num" style="border-bottom:none;">6</td><td style="padding:0;"><div style="text-align:center; font-weight:bold; font-size:9px; padding:2px; border-bottom:1px solid #000;">CATATAN PEGAWAI TATA USAHA</div><table class="grid-data"><tr><td colspan="3"><span class="f-label">Nama Lama</span><div>@foreach($nama_lama_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div></td></tr><tr><td colspan="3"><span class="f-label">Alamat Tempat Tinggal Lama</span><div>@foreach($alamat_lama_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div></td></tr><tr><td width="50%"><span class="f-label">Nomor Paspor / SPLP Lama</span><div>@foreach($paspor_lama_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div></td><td width="25%"><span class="f-label">Tanggal</span><div>@foreach($tanggal_lama_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div></td><td width="25%"><span class="f-label">Berlaku s/d</span><div>@foreach($tanggal_lama_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div></td></tr><tr><td colspan="3"><span class="f-label">Tempat Dikeluarkan</span><div>@foreach($reg_lama_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div></td></tr><tr><td colspan="3"><span class="f-label">Nomor Register</span><div>@foreach($reg_lama_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div></td></tr><tr><td width="50%"><span class="f-label">Nomor Register / SPLP Baru</span><div>@foreach($paspor_lama_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div></td><td width="25%"><span class="f-label">Tanggal</span><div>@foreach($tanggal_lama_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div></td><td width="25%"><span class="f-label">Berlaku s/d</span><div>@foreach($tanggal_lama_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div></td></tr><tr><td colspan="3"><span class="f-label">Tempat Dikeluarkan</span><div>@foreach($reg_lama_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div></td></tr><tr><td colspan="2"><span class="f-label">Nomor Surat Persetujuan Kakanwil Depkumham</span><div>@foreach($surat_kakanwil_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div></td><td><span class="f-label">Tanggal</span><div>@foreach($tanggal_lama_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div></td></tr></table><div style="text-align:right; font-size:8px; padding:5px;">Paraf Pegawai, <span class="dotted-line" style="width:60px;"></span></div></td></tr>
+        <tr><td colspan="2" style="padding:0; border-top:2px solid #000;"><div style="text-align:center; font-weight:bold; font-size:9px; padding:2px; border-bottom:1px solid #000;">CATATAN PEJABAT IMIGRASI</div><table style="width:100%; border-collapse:collapse; font-size:8px;"><tr><td width="50%" style="border-right:1px solid #000; padding:3px; vertical-align:top;"><div style="margin-bottom:3px;">NIK @foreach($nik_pejim_chars as $c)<div class="k">{{ $c }}</div>@endforeach &nbsp;&nbsp; Paraf Pejim, ______</div>Tanggal @for($i=0;$i<8;$i++)<div class="k" style="margin-top:2px;">&nbsp;</div>@endfor<div style="margin-top:5px; border-top:1px solid #000; padding-top:2px;">Daftar Cekal : Tercantum <span class="chk-box"></span> Tidak <span class="chk-box"></span> <br>Kelainan Surat : Ada <span class="chk-box"></span> Tidak <span class="chk-box"></span> <br>Tanggal @for($i=0;$i<8;$i++)<div class="k" style="margin-top:2px;">&nbsp;</div>@endfor Paraf Pejim, ______</div></td><td width="50%" style="padding:3px; vertical-align:top;">Kelengkapan Persyaratan : Lengkap <span class="chk-box"></span> Tidak <span class="chk-box"></span> <br>Tanggal @for($i=0;$i<8;$i++)<div class="k" style="margin-top:2px;">&nbsp;</div>@endfor Paraf Pejim, ______<div style="margin-top:5px; border-top:1px solid #000; padding-top:2px;">Persetujuan : Setuju <span class="chk-box"></span> Tidak <span class="chk-box"></span> <br><br>KAKANIM,<br><br><span class="dotted-line" style="width:150px;"></span></div></td></tr></table></td></tr>
+    </table>
 
-        <tr>
-            <td colspan="3" class="border-right" style="width: 75%;">
-                <span class="f-label">NAMA LENGKAP</span>
-                <div class="box-row">@foreach($nama_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div>
-            </td>
-            <td>
-                <span class="f-label">JENIS KELAMIN *</span>
-                <span class="chk">{{ $jk=='L'?'X':'' }}</span> L &nbsp;
-                <span class="chk">{{ $jk=='P'?'X':'' }}</span> P
-            </td>
-        </tr>
+    <div style="page-break-before: always;"></div>
 
+    <table class="kop-surat" style="margin-top:0;">
         <tr>
-            <td colspan="3" class="border-right">
-                <span class="f-label">NAMA LAIN (ALIAS) **</span>
-                <div class="box-row">@for($i=0;$i<25;$i++)<div class="k">&nbsp;</div>@endfor</div>
-            </td>
-            <td>
-                <span class="f-label">TINGGI BADAN</span>
-                @foreach($tinggi_chars as $t)<div class="k">{{ $t }}</div>@endforeach cm
-            </td>
-        </tr>
-
-        <tr>
-            <td colspan="2" class="border-right" style="width: 60%;">
-                <span class="f-label">TEMPAT LAHIR</span>
-                <div class="box-row">@foreach($tempat_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div>
-            </td>
-            <td colspan="2">
-                <div class="label-with-dot">
-                    <span class="dot"></span><span class="label-text">TANGGAL LAHIR</span>
-                </div>
-                <div class="box-row">@foreach($tgl_lahir_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div>
-            </td>
-        </tr>
-
-        <tr>
-            <td colspan="2" class="border-right">
-                <span class="f-label">NOMOR KTP WNI</span>
-                <div class="box-row">@foreach($nik_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div>
-            </td>
-            <td colspan="2">
-                <div class="label-with-dot">
-                    <span class="dot"></span><span class="label-text">TGL DIBERLAKUKAN</span>
-                </div>
-                <div class="box-row">@foreach($tgl_berlaku_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div>
-            </td>
-        </tr>
-
-        <tr>
-            <td colspan="2" class="border-right">
-                <span class="f-label">TEMPAT DIKELUARKAN</span>
-                <div class="box-row">@foreach($tempat_keluar_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div>
-            </td>
-            <td colspan="2">
-                <div class="label-with-dot">
-                    <span class="dot"></span><span class="label-text">BERLAKU S/D</span>
-                </div>
-                <div class="box-row">@foreach($tgl_habis_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div>
-            </td>
-        </tr>
-
-        <tr class="no-border-bottom">
-            <td colspan="4" style="padding-bottom: 0;">
-                <span class="f-label">NAMA DAN ALAMAT KANTOR / PEKERJAAN ***</span>
-                <div class="box-row">@foreach($pekerjaan_1_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="4" style="padding-top: 2px;">
-                <div class="box-row">
-                    @foreach($pekerjaan_2_chars as $c)<div class="k">{{ $c }}</div>@endforeach
-                    <span style="font-size: 9px; font-weight: bold; margin: 0 8px;">TELP / HP</span>
-                    @foreach($telp_chars as $c)<div class="k">{{ $c }}</div>@endforeach
-                </div>
-            </td>
-        </tr>
-
-        <tr class="no-border-bottom">
-            <td colspan="4" style="padding-bottom: 0;">
-                <span class="f-label">ALAMAT TEMPAT TINGGAL</span>
-                <div class="box-row">@foreach($alamat_1_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="4" style="padding-top: 2px;">
-                <div class="box-row">
-                    @foreach($alamat_2_chars as $c)<div class="k">{{ $c }}</div>@endforeach
-                    <span style="font-size: 9px; font-weight: bold; margin: 0 8px;">TELP / HP</span>
-                    @foreach($telp_chars as $c)<div class="k">{{ $c }}</div>@endforeach
-                </div>
-            </td>
-        </tr>
-
-        <tr>
-            <td colspan="4">
-                <span class="f-label">ALAMAT EMAIL</span>
-                <div class="box-row">@foreach($email_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div>
-            </td>
-        </tr>
-
-        <tr>
-            <td colspan="4">
-                <span class="f-label">NAMA IBU</span>
-                <div class="box-row">@foreach($ibu_nama_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="4">
-                <span class="f-label">KEWARGANEGARAAN</span>
-                <div class="box-row">@foreach($ibu_warga_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" class="border-right">
-                <span class="f-label">TEMPAT LAHIR</span>
-                <div class="box-row">@foreach($ibu_tempat_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div>
-            </td>
-            <td colspan="2">
-                <div class="label-with-dot">
-                    <span class="dot"></span><span class="label-text">TANGGAL LAHIR</span>
-                </div>
-                <div class="box-row">@foreach($ibu_tgl_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div>
-            </td>
-        </tr>
-
-        <tr>
-            <td colspan="4">
-                <span class="f-label">NAMA AYAH</span>
-                <div class="box-row">@foreach($ayah_nama_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="4">
-                <span class="f-label">KEWARGANEGARAAN</span>
-                <div class="box-row">@foreach($ayah_warga_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" class="border-right">
-                <span class="f-label">TEMPAT LAHIR</span>
-                <div class="box-row">@foreach($ayah_tempat_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div>
-            </td>
-            <td colspan="2">
-                <div class="label-with-dot">
-                    <span class="dot"></span><span class="label-text">TANGGAL LAHIR</span>
-                </div>
-                <div class="box-row">@foreach($ayah_tgl_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div>
-            </td>
-        </tr>
-
-        <tr class="no-border-bottom">
-            <td colspan="4" style="padding-bottom: 0;">
-                <span class="f-label">ALAMAT ORANG TUA</span>
-                <div class="box-row">@foreach($ortu_alamat_1_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="4" style="padding-top: 2px;">
-                <div class="box-row">
-                    @foreach($ortu_alamat_2_chars as $c)<div class="k">{{ $c }}</div>@endforeach
-                    <span style="font-size: 9px; font-weight: bold; margin: 0 8px;">TELP / HP</span>
-                    @for($i=0;$i<12;$i++)<div class="k">&nbsp;</div>@endfor
-                </div>
-            </td>
-        </tr>
-
-        <tr>
-            <td colspan="4">
-                <span class="f-label">NAMA SUAMI / ISTRI</span>
-                <div class="box-row">@foreach($pasangan_nama_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="4">
-                <span class="f-label">KEWARGANEGARAAN</span>
-                <div class="box-row">@foreach($pasangan_warga_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" class="border-right">
-                <span class="f-label">TEMPAT LAHIR</span>
-                <div class="box-row">@foreach($pasangan_tempat_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div>
-            </td>
-            <td colspan="2">
-                <div class="label-with-dot">
-                    <span class="dot"></span><span class="label-text">TANGGAL LAHIR</span>
-                </div>
-                <div class="box-row">@foreach($pasangan_tgl_chars as $c)<div class="k">{{ $c }}</div>@endforeach</div>
+            <td class="kop-logo"><img src="{{ public_path('img/logo-kemenkumham.png') }}" alt="Logo" style="width: 60px; height: auto;"></td>
+            <td class="kop-text">
+                <h1>KEMENTERIAN IMIGRASI DAN PEMASYARAKATAN REPUBLIK INDONESIA</h1>
+                <h2>DIREKTORAT JENDERAL IMIGRASI</h2>
+                <h2>KANTOR WILAYAH JAWA TENGAH</h2>
+                <h3>KANTOR IMIGRASI WONOSOBO</h3>
+                <p>Jalan Raya Banyumas km 5,5 Selomerto Wonosobo 56361</p>
+                <p>Telepon : (0286) 321628, Faksimile : (0286) 325587</p>
+                <p>Laman : www.kanimwonosobo.kemenkumham.go.id Pos-el : kanim.wonosobo@kemenkumham.go.id</p>
             </td>
         </tr>
     </table>
 
-    <div class="page-break"></div>
-
-
-    <div class="header-wrapper">
-        <div class="instansi">{{ $kop_instansi ?? 'KEMENTERIAN HUKUM DAN HAM' }}<br>KANTOR IMIGRASI WONOSOBO</div>
-        <div style="font-size: 9px; text-align: center; clear:both; padding-top: 5px;">Jalan Raya Banyumas km 5,5 Selomerto Wonosobo</div>
+    <div class="legal-block">
+        <div class="legal-title">UNDANG-UNDANG NOMOR 6 TAHUN 2011 TENTANG KEIMIGRASIAN PASAL 126 HURUF C DAN D :</div>
+        <ol type="a" start="3" style="margin-top:0; padding-left:15px; margin-bottom:5px;">
+            <li>memberikan data yang tidak sah atau keterangan yang tidak benar untuk memperoleh Dokumen Perjalanan Republik Indonesia bagi dirinya sendiri atau orang lain dipidana dengan pidana penjara paling lama 5 (lima) tahun dan pidana denda paling banyak Rp. 500.000.000,00 (lima ratus juta rupiah).</li>
+            <li>Memiliki atau menggunakan secara melawan hukum 2 (dua) atau lebih Dokumen Perjalanan Republik Indonesia yang sejenis dan semuanya masih berlaku dipidana dengan pidana penjara paling lama 5 (lima) tahun dan pidana denda paling banyak Rp. 500.000.000,00 (lima ratus juta rupiah).</li>
+        </ol>
+        <div class="legal-title">PERATURAN MENTERI HUKUM DAN HAM RI NOMOR 8 TAHUN 2014 PASAL 21 :</div>
+        <div style="padding-left:0;">Seluruh biaya yang berkaitan dengan permohonan Paspor Biasa yang telah disetorkan pada Kas Negara oleh Pemohon tidak dapat ditarik kembali.</div>
     </div>
-    <div class="garis-kop"></div>
 
-    <h3 class="text-center" style="text-decoration: underline;">SURAT PERNYATAAN</h3>
-
-    <p>Yang bertanda tangan di bawah ini, saya :</p>
-
-    <table class="plain-table">
-        <tr><td width="150">Nama</td><td width="10">:</td><td class="isian-text">{{ $nama }}</td></tr>
-        <tr><td>Tempat, Tanggal Lahir</td><td>:</td><td class="isian-text">{{ $ttl }}</td></tr>
-        <tr><td>Pekerjaan</td><td>:</td><td class="isian-text">{{ $pekerjaan }}</td></tr>
-        <tr><td>Nomor HP</td><td>:</td><td class="isian-text">{{ $no_hp }}</td></tr>
-        <tr><td>Alamat</td><td>:</td><td class="isian-text">{{ $alamat }}</td></tr>
+    <div class="judul-surat">SURAT PERNYATAAN</div>
+    <div style="font-size:9px;">Yang bertanda tangan di bawah ini, saya :</div>
+    <table class="table-isian">
+        <tr><td width="120">Nama</td><td width="10">:</td><td class="dots-fill">{{ $nama }}</td></tr>
+        <tr><td>Tempat, Tanggal Lahir</td><td>:</td><td class="dots-fill">{{ $ttl }}</td></tr>
+        <tr><td>Pekerjaan</td><td>:</td><td class="dots-fill">{{ $pekerjaan_str }}</td></tr>
+        <tr><td>Nomor HP</td><td>:</td><td class="dots-fill">{{ $no_hp }}</td></tr>
+        <tr><td>Alamat</td><td>:</td><td class="dots-fill">{{ $alamat }}</td></tr>
     </table>
-
-    <p>Dengan ini menyatakan dengan sebenarnya bahwa :</p>
-
-    <ol style="padding-left: 20px; margin: 5px 0;">
-        <li style="margin-bottom: 5px;">Saya belum/sudah* mempunyai Paspor RI atau Dokumen Perjalanan RI lainnya;</li>
-        <li style="margin-bottom: 5px;">Semua surat atau dokumen yang saya lampirkan adalah benar milik saya dan sah secara hukum;</li>
-        <li style="margin-bottom: 5px;">Tujuan saya mengurus paspor adalah untuk <b>{{ $tujuan }}</b>;</li>
-        <li style="margin-bottom: 5px;">Saya tidak akan bekerja secara illegal di luar negeri/menjadi TKI NON PROSEDURAL;</li>
-        <li style="margin-bottom: 5px;">Apabila permohonan saya Ditolak Sistem/Wawancara, saya tidak akan menuntut pengembalian biaya paspor;</li>
-        <li style="margin-bottom: 5px;">Segala keterangan yang saya berikan adalah benar dan dapat dipertanggungjawabkan secara hukum.</li>
+    <div style="font-size:9px;">Dengan ini menyatakan dengan sebenarnya bahwa :</div>
+    <ol class="point-list">
+        <li>Saya belum/sudah* mempunyai Paspor RI atau Dokumen Perjalanan RI lainnya;</li>
+        <li>Semua surat atau dokumen yang saya lampirkan dalam pengajuan permohonan Paspor RI ini adalah benar milik saya dan sah secara hukum sesuai dengan ketentuan yang berlaku;</li>
+        <li>Tujuan saya mengurus paspor adalah untuk <span class="dots-fill" style="padding:0 5px;">{{ $tujuan }}</span>...........;</li>
+        <li>Saya tidak akan bekerja secara illegal di luar negeri/menjadi <b>TKI NON PROSEDURAL</b>;</li>
+        <li>Apabila permohonan saya Ditolak Sistem/ Ditolak Wawancara/ Ditolak Adjudikator/ Reject Adjudicator Pusat, saya tidak akan menuntut pengembalian biaya paspor sesuai dengan pasal 21 Peraturan Menteri Hukum dan HAM RI Nomor 8 Tahun 2014;</li>
+        <li>Bahwa saya tidak akan menyerahkan paspor tersebut yang masih berlaku kepada orang lain yang tidak berhak;</li>
+        <li>Apabila paspor tersebut tidak saya ambil sampai batas waktu 30 (tiga puluh) hari sejak tanggal diterbitkan, maka saya mengetahui bahwa paspor saya tersebut telah dibatalkan oleh pejabat yang berwenang;</li>
+        <li>Segala keterangan yang saya berikan dalam proses permohonan Paspor RI adalah benar dan dapat dipertanggungjawabkan secara hukum.</li>
     </ol>
-
-    <br>
-    <div class="ttd-area">
-        Wonosobo, {{ $tgl_ttd }}<br>
-        Yang Membuat Pernyataan,<br>
-        <div class="materai-box">Materai<br>Rp10.000</div>
-        <br><br>
-        ( <b>{{ $nama }}</b> )
+    <div style="font-size:9px; text-align:justify; margin-top:5px;">Demikian Surat Pernyataan ini dibuat dengan sebenarnya dan untuk dipergunakan sebagaimana mestinya. Apabila pernyataan ini tidak benar, saya bersedia dituntut sesuai dengan ketentuan peraturan perundang-undangan.</div>
+    <div class="ttd-area-surat">
+        Wonosobo,<br>Yang membuat pernyataan,<br><br><div class="materai-box">Materai<br>Rp. 10.000,-</div><br>(......................................................)
     </div>
+    <div style="clear:both;"></div><div style="font-size:9px; font-style:italic; margin-top:10px;">*coret yang tidak perlu</div>
 
-    <div class="page-break"></div>
+    <div style="page-break-before: always;"></div>
 
-
-    <div class="header-wrapper">
-        <div class="instansi">{{ $kop_instansi ?? 'KEMENTERIAN HUKUM DAN HAM' }}<br>KANTOR IMIGRASI WONOSOBO</div>
-    </div>
-    <div class="garis-kop"></div>
-
-    <h3 class="text-center">HASIL WAWANCARA PEMOHON PASPOR RI</h3>
-
-    <p>Atas pertanyaan-pertanyaan petugas wawancara, pemohon mengaku dan memberi keterangan sebagai berikut :</p>
-
-    <table class="plain-table">
-        <tr><td width="150">Nama</td><td width="10">:</td><td class="border-dots"><b>{{ $nama }}</b></td></tr>
-        <tr><td>Tempat dan Tgl. Lahir</td><td>:</td><td class="border-dots">{{ $ttl }}</td></tr>
-        <tr><td>Pekerjaan</td><td>:</td><td class="border-dots">{{ $pekerjaan }}</td></tr>
-        <tr><td>Nama Ayah</td><td>:</td><td class="border-dots">{{ $ayah_nama }}</td></tr>
-        <tr><td>Nama Ibu</td><td>:</td><td class="border-dots">{{ $ibu_nama }}</td></tr>
-        <tr><td>Alamat</td><td>:</td><td class="border-dots">{{ $alamat }}</td></tr>
+    <table class="kop-surat" style="margin-top:0;">
+        <tr>
+            <td class="kop-logo"><img src="{{ public_path('img/logo-kemenkumham.png') }}" alt="Logo" style="width: 60px; height: auto;"></td>
+            <td class="kop-text">
+                <h1>KEMENTERIAN IMIGRASI DAN PEMASYARAKATAN REPUBLIK INDONESIA</h1>
+                <h2>DIREKTORAT JENDERAL IMIGRASI</h2>
+                <h2>KANTOR WILAYAH JAWA TENGAH</h2>
+                <h3>KANTOR IMIGRASI WONOSOBO</h3>
+                <p>Jalan Raya Banyumas km 5,5 Selomerto Wonosobo 56361</p>
+                <p>Telepon : (0286) 321628, Faksimile : (0286) 325587</p>
+                <p>Email : kanim_wonosobo@imigrasi.go.id</p>
+            </td>
+        </tr>
     </table>
 
-    <br>
-    <p>Maksud dan tujuan keluar negeri :</p>
-    <div class="border-dots" style="padding: 5px;">{{ $tujuan }}</div>
-    
-    <br>
-    <p>Keterangan lain :</p>
-    <div class="border-dots" style="height: 20px;"></div>
-    <div class="border-dots" style="height: 20px;"></div>
+    <div style="text-align:center; font-weight:bold; font-size:12px; margin-bottom:20px; text-decoration:underline;">HASIL WAWANCARA PEMOHON PASPOR RI</div>
 
-    <br>
-    <p>Kesimpulan :</p>
-    <div class="border-dots" style="padding: 5px;">DAPAT DIBERIKAN PASPOR</div>
+    <p style="font-size:10px;">Atas pertanyaan-pertanyaan petugas wawancara, pemohon mengaku dan memberi keterangan sebagai berikut :</p>
+
+    <table class="table-isian">
+        <tr><td width="150">Nama</td><td width="10">:</td><td class="dots-fill">{{ $nama }}</td><td width="30" align="right">(L/P)</td></tr>
+        <tr><td>Tempat dan Tgl. Lahir</td><td>:</td><td class="dots-fill" colspan="2">{{ $ttl }}</td></tr>
+        <tr><td>Pekerjaan</td><td>:</td><td class="dots-fill" colspan="2">{{ $pekerjaan_str }}</td></tr>
+        <tr><td>Nama Ayah</td><td>:</td><td class="dots-fill" colspan="2">{{ $ayah_nama }}</td></tr>
+        <tr><td>Nama Ibu</td><td>:</td><td class="dots-fill" colspan="2">{{ $ibu_nama }}</td></tr>
+        <tr><td>Alamat</td><td>:</td><td class="dots-fill" colspan="2">{{ $alamat }}</td></tr>
+        <tr><td></td><td></td><td class="dots-fill" colspan="2" style="height:15px;"></td></tr>
+    </table>
+
+    <div class="wawancara-label">Maksud dan tujuan keluar negeri :</div>
+    <div class="wawancara-dots"></div>
+    <div class="wawancara-dots"></div>
+    
+    <div class="wawancara-label">Keterangan lain :</div>
+    <div class="wawancara-dots"></div>
+    <div class="wawancara-dots"></div>
+    <div class="wawancara-dots"></div>
+    <div class="wawancara-dots"></div>
+
+    <div class="wawancara-label">Kesimpulan :</div>
+    <div class="wawancara-dots"></div>
+    <div class="wawancara-dots"></div>
+    <div class="wawancara-dots"></div>
+    <div class="wawancara-dots"></div>
 
     <br><br>
     <table style="width: 100%;">
         <tr>
-            <td class="text-center" width="50%">
-                Pemohon,<br><br><br><br>
-                ( {{ $nama }} )
-            </td>
-            <td class="text-center" width="50%">
-                Wonosobo, ........................<br>
-                Petugas Wawancara,<br><br><br><br>
-                ( ...................................... )
-            </td>
+            <td></td>
+            <td align="center" width="40%">Wonosobo,....................................</td>
+        </tr>
+        <tr>
+            <td align="center">Pemohon,<br><br><br><br><br>( ........................................ )</td>
+            <td align="center">Petugas Wawancara,<br><br><br><br><br>( ........................................ )</td>
         </tr>
     </table>
-
-    @if($cetak_surat_ortu)
-    
-    <div class="page-break"></div>
-
-    <div class="header-wrapper">
-        <div class="instansi">{{ $kop_instansi ?? 'KEMENTERIAN HUKUM DAN HAM' }}<br>KANTOR IMIGRASI WONOSOBO</div>
-    </div>
-    <div class="garis-kop"></div>
-
-    <h3 class="text-center" style="text-decoration: underline;">SURAT PERNYATAAN ORANG TUA</h3>
-    <p class="text-center" style="margin-top: -10px; font-style: italic;">(Untuk Permohonan Paspor Anak)</p>
-
-    <br>
-    <p>Yang bertanda tangan di bawah ini:</p>
-
-    <table class="plain-table">
-        <tr><td width="150">Nama Ayah/Wali</td><td width="10">:</td><td class="isian-text">{{ $ayah_nama }}</td></tr>
-        <tr><td>Tempat, Tgl Lahir</td><td>:</td><td class="isian-text">{{ $ayah_ttl }}</td></tr>
-        <tr><td>Alamat</td><td>:</td><td class="isian-text">{{ $ortu_alamat }}</td></tr>
-        <tr><td>Bertindak selaku</td><td>:</td><td class="isian-text">AYAH KANDUNG</td></tr>
-    </table>
-
-    <p>Adalah benar orang tua kandung dari anak:</p>
-
-    <table class="plain-table">
-        <tr><td width="150">Nama Anak</td><td width="10">:</td><td class="isian-text">{{ $nama }}</td></tr>
-        <tr><td>Tempat, Tgl Lahir</td><td>:</td><td class="isian-text">{{ $ttl }}</td></tr>
-        <tr><td>Alamat</td><td>:</td><td class="isian-text">{{ $alamat }}</td></tr>
-    </table>
-
-    <p class="text-justify">
-        Dengan ini menyatakan sesungguhnya bahwa kami menyetujui anak kami tersebut untuk membuat Paspor RI
-        dan akan bertanggung jawab sepenuhnya atas keberangkatan dan kepulangan anak kami, 
-        serta menanggung segala biaya yang timbul.
-    </p>
-
-    <br>
-    
-    <div class="ttd-area">
-        Wonosobo, {{ $tgl_ttd }}<br>
-        Yang Membuat Pernyataan,<br>
-        <div class="materai-box">Materai<br>Rp 10.000</div>
-        <br><br>
-        ( <b>{{ $ayah_nama }}</b> )
-    </div>
-    
-    <div class="ttd-left">
-        <br>Mengetahui,<br>Ibu Kandung<br><br><br><br><br>
-        ( <b>{{ $ibu_nama }}</b> )
-    </div>
-
-    @endif
 
 </body>
 </html>
