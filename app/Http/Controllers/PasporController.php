@@ -25,10 +25,10 @@ class PasporController extends Controller
         $tempat     = strtoupper($request->tempat_lahir);
         $tgl_lahir  = $request->tgl_lahir;
         
-        // --- KONTAK & ALAMAT (PASTIKAN BEDANYA DI SINI) ---
-        $no_hp_pribadi  = $request->no_hp; // Untuk Alamat Rumah
-        $no_telp_kantor = $request->nomor_telp_kantor ?? ''; // Untuk Alamat Kantor
-        $no_hp_ortu     = $request->no_hp_ortu ?? ''; // Untuk Alamat Ortu
+        // --- KONTAK & ALAMAT ---
+        $no_hp_pribadi  = $request->no_hp; 
+        $no_telp_kantor = $request->nomor_telp_kantor ?? ''; 
+        $no_hp_ortu     = $request->no_hp_ortu ?? ''; 
         
         $email          = strtoupper($request->email ?? '');
         $alamat_lengkap = strtoupper($request->alamat);
@@ -36,7 +36,7 @@ class PasporController extends Controller
         // Tujuan
         $tujuan = strtoupper($request->tujuan ?? 'WISATA'); 
 
-        // Tanggal Tanda Tangan
+        // Tanggal Tanda Tangan (Format: 28 Januari 2026)
         $bulanIndo = [
             '01' => 'Januari', '02' => 'Februari', '03' => 'Maret', '04' => 'April',
             '05' => 'Mei', '06' => 'Juni', '07' => 'Juli', '08' => 'Agustus',
@@ -44,12 +44,15 @@ class PasporController extends Controller
         ];
         $tgl_ttd = date('d') . ' ' . $bulanIndo[date('m')] . ' ' . date('Y');
 
+        // --- NEW: TANGGAL PERMOHONAN (Format Angka Kotak: 28012026) ---
+        // Variabel ini yang sebelumnya hilang menyebabkan error
+        $tgl_permohonan_chars = str_split(date('dmY')); 
+
         // --- PEKERJAAN ---
         $pekerjaan_id = $request->pekerjaan_id;
         $pekerjaan_lainnya = ($pekerjaan_id == '5') ? strtoupper($request->pekerjaan_lainnya) : "";
         $nama_alamat_kantor = strtoupper($request->nama_alamat_kantor ?? '');
 
-        // Mapping Teks Pekerjaan
         $map_pekerjaan_text = [
             '1' => 'PEJABAT NEGARA', '2' => 'PNS', '3' => 'TNI / POLRI',
             '4' => 'KARYAWAN SWASTA', '5' => $pekerjaan_lainnya
@@ -118,6 +121,8 @@ class PasporController extends Controller
             'cetak_surat_ortu' => $request->has('buat_surat_ortu'),
 
             // Data Kotak Perdim
+            'tgl_permohonan_chars' => $tgl_permohonan_chars, // <--- VAR DIKEMBALIKAN
+            
             'nama_chars' => $to_box($nama, 37), 'jk' => $jk, 'alias_chars' => $to_box($nama_alias, 25),
             'tinggi_chars' => $to_box($tinggi, 3), 'tempat_chars' => $to_box($tempat, 20),
             'tgl_lahir_chars' => $date_box($tgl_lahir), 'nik_chars' => $to_box($nik, 16),
@@ -148,19 +153,5 @@ class PasporController extends Controller
         
         $pdf = Pdf::loadView('pdf.formulir_lengkap', $data)->setPaper('a4', 'portrait');
         return $pdf->stream('Berkas_Paspor_Lengkap.pdf');
-    }
-
-    // --- FUNGSI SPESIAL UNTUK KOTAK-KOTAK ---
-    private function tulisKotak($pdf, $text, $x, $y, $step)
-    {
-        $chars = str_split($text); // Pecah teks jadi huruf per huruf
-        $currentX = $x;
-        
-        foreach ($chars as $char) {
-            $pdf->SetXY($currentX, $y);
-            // Angka 5 adalah tinggi baris, sesuaikan jika perlu
-            $pdf->Cell($step, 5, $char, 0, 0, 'C'); 
-            $currentX += $step; // Geser ke kanan sesuai jarak kotak
-        }
     }
 }
