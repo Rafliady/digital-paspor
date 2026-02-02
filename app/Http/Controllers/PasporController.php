@@ -36,7 +36,7 @@ class PasporController extends Controller
         // Tujuan
         $tujuan = strtoupper($request->tujuan ?? 'WISATA'); 
 
-        // Tanggal Tanda Tangan (Format: 28 Januari 2026)
+        // Tanggal Tanda Tangan
         $bulanIndo = [
             '01' => 'Januari', '02' => 'Februari', '03' => 'Maret', '04' => 'April',
             '05' => 'Mei', '06' => 'Juni', '07' => 'Juli', '08' => 'Agustus',
@@ -44,8 +44,7 @@ class PasporController extends Controller
         ];
         $tgl_ttd = date('d') . ' ' . $bulanIndo[date('m')] . ' ' . date('Y');
 
-        // --- NEW: TANGGAL PERMOHONAN (Format Angka Kotak: 28012026) ---
-        // Variabel ini yang sebelumnya hilang menyebabkan error
+        // --- TANGGAL PERMOHONAN OTOMATIS (ddmmyyyy) ---
         $tgl_permohonan_chars = str_split(date('dmY')); 
 
         // --- PEKERJAAN ---
@@ -93,10 +92,24 @@ class PasporController extends Controller
         list($pekerjaan_1, $pekerjaan_2) = $split_text($nama_alamat_kantor, 37, 18);
         list($ortu_alamat_1, $ortu_alamat_2) = $split_text($ortu_alamat_raw, 37, 18);
 
-        $ktp_tgl_keluar = $request->ktp_tgl_keluar;
-        $ktp_habis_chars = $request->has('ktp_seumur_hidup') ? str_split(str_pad("SEUMUR HIDUP", 10, " ")) : str_split(date('dmY', strtotime($request->ktp_tgl_habis ?? '+5 years')));
+        // --- LOGIKA TANGGAL KTP (DIPERBAIKI) ---
+        // Tanggal Dikeluarkan
+        $ktp_tgl_keluar = $request->ktp_tgl_keluar; // Jika kosong, helper $date_box akan render spasi
+
+        // Tanggal Masa Berlaku (Habis)
+        if ($request->has('ktp_seumur_hidup')) {
+            // Jika dicentang seumur hidup
+            $ktp_habis_chars = str_split(str_pad("SEUMUR HIDUP", 10, " "));
+        } elseif (!empty($request->ktp_tgl_habis)) {
+            // Jika ada isinya, format tanggalnya
+            $ktp_habis_chars = str_split(date('dmY', strtotime($request->ktp_tgl_habis)));
+        } else {
+            // Jika KOSONG (misal anak), isi dengan spasi kosong agar di PDF bersih
+            $ktp_habis_chars = str_split("        ");
+        }
 
         $to_box = fn($str, $len) => str_split(str_pad(substr($str ?? '', 0, $len), $len, " "));
+        // $date_box otomatis mengembalikan spasi jika input ($d) kosong
         $date_box = fn($d) => $d ? str_split(date('dmY', strtotime($d))) : str_split("        ");
         $empty_box = fn($len) => str_split(str_pad("", $len, " "));
 
@@ -121,7 +134,7 @@ class PasporController extends Controller
             'cetak_surat_ortu' => $request->has('buat_surat_ortu'),
 
             // Data Kotak Perdim
-            'tgl_permohonan_chars' => $tgl_permohonan_chars, // <--- VAR DIKEMBALIKAN
+            'tgl_permohonan_chars' => $tgl_permohonan_chars,
             
             'nama_chars' => $to_box($nama, 37), 'jk' => $jk, 'alias_chars' => $to_box($nama_alias, 25),
             'tinggi_chars' => $to_box($tinggi, 3), 'tempat_chars' => $to_box($tempat, 20),
@@ -130,7 +143,7 @@ class PasporController extends Controller
             'tgl_habis_chars' => $ktp_habis_chars,
             'pekerjaan_1_chars' => $to_box($pekerjaan_1, 37), 'pekerjaan_2_chars' => $to_box($pekerjaan_2, 18),
             
-            // --- VARIABEL KOTAK TELEPON (DIPISAH) ---
+            // Variabel Kotak Telepon
             'telp_kantor_chars' => $to_box($no_telp_kantor, 12),
             'telp_rumah_chars' => $to_box($no_hp_pribadi, 12),
             'telp_ortu_chars' => $to_box($no_hp_ortu, 12),
@@ -153,5 +166,18 @@ class PasporController extends Controller
         
         $pdf = Pdf::loadView('pdf.formulir_lengkap', $data)->setPaper('a4', 'portrait');
         return $pdf->stream('Berkas_Paspor_Lengkap.pdf');
+    }
+
+    // --- FUNGSI SPESIAL UNTUK KOTAK-KOTAK ---
+    private function tulisKotak($pdf, $text, $x, $y, $step)
+    {
+        $chars = str_split($text); // Pecah teks jadi huruf per huruf
+        $currentX = $x;
+        
+        foreach ($chars as $char) {
+            $pdf->SetXY($currentX, $y);
+            $pdf->Cell($step, 5, $char, 0, 0, 'C'); 
+            $currentX += $step; 
+        }
     }
 }
