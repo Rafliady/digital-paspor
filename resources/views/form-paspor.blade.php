@@ -12,29 +12,14 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     
     <style>
-        /* --- MODERN THEME --- */
-        :root {
-            --primary-color: #0c2e8a; /* Biru Imigrasi */
-            --secondary-color: #bfa15f; /* Emas */
-            --bg-color: #f4f7f6;
+        /* --- MODERN THEME (GRADIENT BLUE) --- */
+        body { 
+            background: linear-gradient(135deg, #eef2f8 0%, #d0dbe7 100%);
+            font-family: 'Poppins', sans-serif; 
+            padding-bottom: 80px; 
+            color: #333;
+            min-height: 100vh;
         }
-
-/* OPSI 3: GAMBAR LATAR BELAKANG (CERAH/ASLI) */
-body {
-    /* HANYA memanggil gambar, tanpa lapisan warna biru */
-    background-image: url("{{ asset('img/bg-imigrasi.jpg') }}");
-
-    /* Pengaturan agar gambar pas di layar */
-    background-size: cover;
-    background-position: center center;
-    background-attachment: fixed; /* Gambar diam saat discroll */
-    background-repeat: no-repeat;
-
-    font-family: 'Poppins', sans-serif;
-    padding-bottom: 80px;
-    color: #333;
-    min-height: 100vh; /* Memastikan background memenuhi tinggi layar */
-}
 
         /* CARD STYLING */
         .card { 
@@ -46,10 +31,10 @@ body {
         }
         
         .card-header { 
-            background: linear-gradient(135deg, var(--primary-color) 0%, #001f52 100%); 
+            background: linear-gradient(135deg, #0c2e8a 0%, #001f52 100%); 
             color: white; 
             padding: 30px 20px; 
-            border-bottom: 5px solid var(--secondary-color);
+            border-bottom: 5px solid #bfa15f;
         }
 
         /* STEPPER INDICATOR */
@@ -61,105 +46,53 @@ body {
             padding: 0 10px; 
         }
         .progress-bg { 
-            position: absolute; 
-            top: 20px; 
-            left: 0; 
-            width: 100%; 
-            height: 4px; 
-            background: #e9ecef; 
-            z-index: 1; 
-            border-radius: 10px;
+            position: absolute; top: 20px; left: 0; width: 100%; 
+            height: 4px; background: #e9ecef; z-index: 1; border-radius: 10px;
         }
         .progress-fill { 
-            height: 100%; 
-            background: var(--secondary-color); 
-            width: 0%; 
-            transition: 0.4s ease-in-out; 
-            border-radius: 10px;
+            height: 100%; background: #bfa15f; width: 0%; 
+            transition: 0.4s ease-in-out; border-radius: 10px;
         }
         .step-item { z-index: 2; text-align: center; width: 33.33%; }
         .step { 
-            width: 45px; 
-            height: 45px; 
-            background: white; 
-            border: 3px solid #e9ecef; 
-            border-radius: 50%; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            font-weight: bold; 
-            color: #999; 
-            margin: 0 auto 10px; 
-            transition: 0.3s; 
-            font-size: 1.1rem;
+            width: 45px; height: 45px; background: white; 
+            border: 3px solid #e9ecef; border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center; 
+            font-weight: bold; color: #999; margin: 0 auto 10px; 
+            transition: 0.3s; font-size: 1.1rem;
         }
         .step.active { 
-            border-color: var(--primary-color); 
-            background: var(--primary-color); 
-            color: white; 
-            transform: scale(1.1); 
-            box-shadow: 0 0 15px rgba(12, 46, 138, 0.3); 
+            border-color: #0c2e8a; background: #0c2e8a; color: white; 
+            transform: scale(1.1); box-shadow: 0 0 15px rgba(12, 46, 138, 0.3); 
         }
         .step.finish { 
-            border-color: var(--secondary-color); 
-            background: var(--secondary-color); 
-            color: white; 
+            border-color: #bfa15f; background: #bfa15f; color: white; 
         }
         .step-label { font-size: 0.85rem; font-weight: 600; color: #aaa; transition: 0.3s; }
-        .step-item.active .step-label { color: var(--primary-color); }
+        .step-item.active .step-label { color: #0c2e8a; }
 
         /* FORM STYLING */
         .form-label { font-weight: 600; font-size: 0.9rem; color: #444; margin-bottom: 6px; }
         .form-control, .form-select { 
-            border-radius: 10px; 
-            border: 1px solid #dee2e6; 
-            padding: 12px 15px; 
-            font-size: 0.95rem; 
-            transition: 0.3s;
+            border-radius: 10px; border: 1px solid #dee2e6; 
+            padding: 12px 15px; font-size: 0.95rem; transition: 0.3s;
         }
         .form-control:focus, .form-select:focus { 
-            border-color: var(--primary-color); 
-            box-shadow: 0 0 0 4px rgba(12, 46, 138, 0.1); 
+            border-color: #0c2e8a; box-shadow: 0 0 0 4px rgba(12, 46, 138, 0.1); 
         }
-        
         .bg-light-blue { 
-            background-color: #f8faff; 
-            border-radius: 15px; 
-            padding: 20px; 
-            margin-bottom: 20px; 
-            border: 1px dashed #ced4da; 
+            background-color: #f8faff; border-radius: 15px; 
+            padding: 20px; margin-bottom: 20px; border: 1px dashed #ced4da; 
         }
-
-        /* BUTTONS */
-        .btn-primary { 
-            background-color: var(--primary-color); 
-            border: none; 
-            padding: 12px 30px; 
-            border-radius: 10px; 
-            font-weight: 600; 
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
-            transition: 0.3s; 
-        }
-        .btn-primary:hover { background-color: #08226b; transform: translateY(-2px); }
-        
-        .btn-success {
-            background: linear-gradient(45deg, #11998e, #38ef7d);
-            border: none;
-            box-shadow: 0 4px 15px rgba(56, 239, 125, 0.4);
-        }
-
-        /* ANIMASI HALAMAN */
-        .form-section { display: none; opacity: 0; transform: translateY(20px); transition: 0.4s ease-out; }
-        .form-section.current { display: block; opacity: 1; transform: translateY(0); }
 
         /* AREA SCAN KAMERA */
         #video-container { 
             position: relative; width: 100%; max-width: 100%; 
             margin: 15px auto; display: none; border-radius: 15px; 
-            overflow: hidden; border: 4px solid var(--primary-color); 
+            overflow: hidden; border: 4px solid #0c2e8a; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.2); 
         }
-        video { width: 100%; height: auto; display: block; transform: scaleX(1); } /* Pastikan tidak mirror */
+        video { width: 100%; height: auto; display: block; transform: scaleX(1); }
         .overlay-guide { 
             position: absolute; top: 15%; left: 5%; width: 90%; height: 70%; 
             border: 2px dashed rgba(255,255,255,0.8); border-radius: 10px; 
@@ -197,7 +130,7 @@ body {
                                 <button class="btn btn-outline-secondary bg-white" onclick="document.getElementById('uploadKtp').click()">
                                     <i class="bi bi-upload me-2"></i> Upload File
                                 </button>
-                                <input type="file" id="uploadKtp" accept="image/*" style="display:none;" onchange="handleFileUpload(this)">
+                                <input type="file" id="uploadKtp" accept="image/*" style="display:none;" onclick="this.value=null" onchange="handleFileUpload(this)">
                             </div>
 
                             <div id="video-container">
@@ -486,8 +419,6 @@ body {
     // --- NAVIGASI STEP ---
     function nextStep(n) {
         document.querySelectorAll('.form-section').forEach(el => el.classList.remove('current'));
-        
-        // Reset Active States
         document.querySelectorAll('.step').forEach(el => el.classList.remove('active', 'finish'));
         document.querySelectorAll('.step-item').forEach(el => el.classList.remove('active'));
 
@@ -553,7 +484,7 @@ body {
         }
     }
 
-    // --- LOGIKA KAMERA & OCR ---
+    // --- LOGIKA KAMERA & OCR (DIPERBAIKI) ---
     let videoStream = null;
 
     function startCamera() {
@@ -585,9 +516,38 @@ body {
         document.getElementById('video-container').style.display = 'none';
     }
 
-    function handleFileUpload(input) {
+    // FIX: Fungsi baru untuk preprocess (Hanya Resize, tanpa thresholding)
+    function preprocessImage(imageSource) {
+        return new Promise((resolve) => {
+            const img = new Image();
+            img.src = typeof imageSource === 'string' ? imageSource : URL.createObjectURL(imageSource);
+            
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                
+                // 1. Resize gambar (Max 1000px agar ringan)
+                const maxWidth = 1000;
+                const scale = maxWidth / img.width;
+                canvas.width = maxWidth;
+                canvas.height = img.height * scale;
+                
+                // 2. Gambar ulang (tanpa manipulasi warna gelap/terang)
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                
+                // Kembalikan gambar hasil olahan
+                canvas.toBlob((blob) => {
+                    resolve(blob);
+                }, 'image/jpeg', 0.95);
+            };
+        });
+    }
+
+    async function handleFileUpload(input) {
         if (input.files && input.files[0]) {
-            runOCR(input.files[0]);
+            // Proses gambar dulu sebelum OCR
+            const processedImage = await preprocessImage(input.files[0]);
+            runOCR(processedImage);
         }
     }
 
@@ -600,10 +560,12 @@ body {
         const ctx = canvas.getContext('2d');
         ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
         
-        canvas.toBlob(blob => {
-            runOCR(blob);
+        canvas.toBlob(async (blob) => {
             stopCamera();
-        }, 'image/jpeg', 0.9);
+            // Proses gambar dulu
+            const processedImage = await preprocessImage(blob);
+            runOCR(processedImage);
+        }, 'image/jpeg', 1.0);
     }
 
     function runOCR(imageBlob) {
@@ -614,7 +576,8 @@ body {
         
         box.style.display = 'block';
         bar.style.width = '0%';
-        
+        bar.className = 'progress-bar progress-bar-striped progress-bar-animated bg-warning';
+
         Tesseract.recognize(
             imageBlob,
             'ind',
@@ -633,27 +596,37 @@ body {
         ).then(({ data: { text } }) => {
             bar.className = 'progress-bar bg-success';
             status.innerText = 'Selesai!';
-            setTimeout(() => { box.style.display = 'none'; }, 1500);
+            setTimeout(() => { box.style.display = 'none'; }, 2000);
             
+            console.log("OCR Result:", text);
             parseKtpText(text);
         }).catch(err => {
-            alert('Gagal memproses gambar.');
+            console.error(err);
+            alert('Gagal memproses gambar. Pastikan internet lancar.');
             box.style.display = 'none';
         });
     }
 
     function parseKtpText(text) {
         const cleanText = text; 
+        let dataFound = false;
 
+        // 1. Cari NIK
         const nikMatch = cleanText.match(/\b\d{16}\b/);
-        if (nikMatch) document.querySelector('input[name="nik"]').value = nikMatch[0];
+        if (nikMatch) {
+            document.querySelector('input[name="nik"]').value = nikMatch[0];
+            dataFound = true;
+        }
 
+        // 2. Cari Nama (Setelah kata "Nama")
         const namaMatch = cleanText.match(/Nama\s*[:\.]?\s*([A-Z\s\.]+)/i);
         if (namaMatch && namaMatch[1]) {
             let namaBersih = namaMatch[1].trim().split('\n')[0];
             document.querySelector('input[name="nama"]').value = namaBersih.toUpperCase();
+            dataFound = true;
         }
 
+        // 3. Cari Tempat & Tgl Lahir
         const ttlMatch = cleanText.match(/Tempat\/Tgl Lahir\s*[:\.]?\s*(.*)/i);
         if (ttlMatch) {
             const fullTTL = ttlMatch[1];
@@ -667,6 +640,7 @@ body {
                     document.querySelector('input[name="tgl_lahir"]').value = tglFix;
                 }
             }
+            dataFound = true;
         }
 
         if (/LAKI/i.test(cleanText)) {
@@ -675,6 +649,7 @@ body {
             document.querySelector('select[name="jk"]').value = 'P';
         }
 
+        // 5. Alamat
         const alamatMatch = cleanText.match(/Alamat\s*[:\.]?\s*(.*)/i);
         let alamatFull = '';
         if (alamatMatch) alamatFull = alamatMatch[1].trim();
@@ -690,6 +665,7 @@ body {
 
         if (alamatFull) {
             document.querySelector('textarea[name="alamat"]').value = alamatFull.toUpperCase();
+            dataFound = true;
         }
 
         if (/BELUM KAWIN/i.test(cleanText)) {
@@ -701,6 +677,10 @@ body {
         } else if (/CERAI/i.test(cleanText)) {
             document.querySelector('select[name="status_sipil_id"]').value = '4'; 
             togglePasangan();
+        }
+
+        if(!dataFound) {
+            alert("Data tidak terbaca dengan baik. Coba foto ulang dengan pencahayaan lebih terang.");
         }
     }
 </script>
