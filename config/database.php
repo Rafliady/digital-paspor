@@ -16,7 +16,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'sqlite'),
+    'default' => env('DB_CONNECTION', 'mysql'), // Ubah default ke mysql jika Anda pakai MySQL lokal
 
     /*
     |--------------------------------------------------------------------------
@@ -43,6 +43,7 @@ return [
             'transaction_mode' => 'DEFERRED',
         ],
 
+        // --- DATABASE 1: LOKAL (ADMIN/LOG) ---
         'mysql' => [
             'driver' => 'mysql',
             'url' => env('DB_URL'),
@@ -58,6 +59,29 @@ return [
             'prefix_indexes' => true,
             'strict' => true,
             'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                (PHP_VERSION_ID >= 80500 ? \Pdo\Mysql::ATTR_SSL_CA : \PDO::MYSQL_ATTR_SSL_CA) => env('MYSQL_ATTR_SSL_CA'),
+            ]) : [],
+        ],
+
+        // --- DATABASE 2: SPRI (READ ONLY) ---
+        // Penambahan konfigurasi untuk database eksternal
+        'mysql_spri' => [
+            'driver' => 'mysql',
+            'url' => env('DB_URL_SPRI'),
+            'host' => env('DB_HOST_SPRI', '127.0.0.1'),
+            'port' => env('DB_PORT_SPRI', '3306'),
+            'database' => env('DB_DATABASE_SPRI', 'forge'),
+            'username' => env('DB_USERNAME_SPRI', 'forge'),
+            'password' => env('DB_PASSWORD_SPRI', ''),
+            'unix_socket' => env('DB_SOCKET_SPRI', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => true,
+            'engine' => null,
+            // Opsi tambahan jika diperlukan
             'options' => extension_loaded('pdo_mysql') ? array_filter([
                 (PHP_VERSION_ID >= 80500 ? \Pdo\Mysql::ATTR_SSL_CA : \PDO::MYSQL_ATTR_SSL_CA) => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
