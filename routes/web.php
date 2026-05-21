@@ -39,5 +39,6 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware(['auth'])->group(function () {
     
     Route::get('/admin/dashboard', [PasporController::class, 'dashboard'])->name('admin.dashboard');
+    Route::delete('/admin/dashboard/hapus/{id}', [App\Http\Controllers\PasporController::class, 'hapusRiwayat'])->name('riwayat.hapus');
     
 });

@@ -66,6 +66,9 @@
         /* STYLE TANDA TANGAN TABEL */
         .table-ttd-surat { width: 100%; margin-top: 30px; font-size: 11pt; border: none; }
         .table-ttd-surat td { vertical-align: top; text-align: center; padding: 0; border: none; }
+        
+        /* STYLE NAMA TTD OTOMATIS */
+        .nama-ttd-otomatis { font-weight: bold; text-decoration: underline; text-transform: uppercase; }
     </style>
 </head>
 <body>
@@ -138,8 +141,8 @@
         <tr><td colspan="2" style="padding:0; border-top:2px solid #000;"><div style="text-align:center; font-weight:bold; font-size:9px; padding:2px; border-bottom:1px solid #000;">CATATAN PEJABAT IMIGRASI</div><table style="width:100%; border-collapse:collapse; font-size:8px;"><tr><td width="50%" style="border-right:1px solid #000; padding:3px; vertical-align:top;"><div style="margin-bottom:3px;">NIK @foreach($nik_pejim_chars as $c)<div class="k">{{ $c }}</div>@endforeach &nbsp;&nbsp; Paraf Pejim, ______</div>Tanggal @for($i=0;$i<8;$i++)<div class="k" style="margin-top:2px;">&nbsp;</div>@endfor<div style="margin-top:5px; border-top:1px solid #000; padding-top:2px;">Daftar Cekal : Tercantum <span class="chk-box"></span> Tidak <span class="chk-box"></span> <br>Kelainan Surat : Ada <span class="chk-box"></span> Tidak <span class="chk-box"></span> <br>Tanggal @for($i=0;$i<8;$i++)<div class="k" style="margin-top:2px;">&nbsp;</div>@endfor Paraf Pejim, ______</div></td><td width="50%" style="padding:3px; vertical-align:top;">Kelengkapan Persyaratan : Lengkap <span class="chk-box"></span> Tidak <span class="chk-box"></span> <br>Tanggal @for($i=0;$i<8;$i++)<div class="k" style="margin-top:2px;">&nbsp;</div>@endfor Paraf Pejim, ______<div style="margin-top:5px; border-top:1px solid #000; padding-top:2px;">Persetujuan : Setuju <span class="chk-box"></span> Tidak <span class="chk-box"></span> <br><table style="width:100%; border:none; margin-top:5px;"><tr><td style="border:none; vertical-align:bottom; padding:0;">Tanggal <br> @for($i=0;$i<8;$i++)<div class="k">&nbsp;</div>@endfor</td><td style="border:none; text-align:center; vertical-align:top; padding:0;">KAKANIM,<br><br><br><span class="dotted-line" style="width:120px;"></span></td></tr></table></div></td></tr></table></td></tr>
     </table>
 
-    <div style="page-break-before: always;"></div>
 
+    <div style="page-break-before: always;"></div>
     <div class="surat-container">
         <table class="kop-surat" style="margin-top:0;">
             <tr>
@@ -192,19 +195,18 @@
             <tr>
                 <td width="50%"></td>
                 <td width="50%">
-                    Wonosobo, {{ $tgl_ttd }}<br>
-                    Yang membuat pernyataan,<br><br>
+                    Wonosobo, {{ $tgl_ttd }}<br> Yang membuat pernyataan,<br><br>
                     <div class="materai-box">Materai<br>Rp. 10.000,-</div>
                     <br>
-                    (......................................................)
+                    <span class="nama-ttd-otomatis">{{ $nama }}</span>
                 </td>
             </tr>
         </table>
         <div style="clear:both;"></div><div style="font-size:10pt; font-style:italic; margin-top:10px;">*coret yang tidak perlu</div>
     </div>
 
-    <div style="page-break-before: always;"></div>
 
+    <div style="page-break-before: always;"></div>
     <div class="surat-container">
         <table class="kop-surat" style="margin-top:0;">
             <tr>
@@ -244,9 +246,10 @@
 
         <br><br>
         <table class="table-ttd-surat">
-            <tr><td></td><td width="40%">Wonosobo,....................................</td></tr>
-            <tr>
-                <td>Pemohon,<br><br><br><br><br>( ........................................ )</td>
+            <tr><td></td><td width="40%">Wonosobo, {{ $tgl_ttd }}</td></tr> <tr>
+                <td>Pemohon,<br><br><br><br><br>
+                    <span class="nama-ttd-otomatis">{{ $nama }}</span>
+                </td>
                 <td>Petugas Wawancara,<br><br><br><br><br>( ........................................ )</td>
             </tr>
         </table>
@@ -297,15 +300,14 @@
             <tr>
                 <td width="50%" style="vertical-align:bottom;">
                     Mengetahui :<br><br><br><br><br><br>
-                    ......................................................<br>
+                    <span class="nama-ttd-otomatis">{{ !empty($ibu_nama) ? $ibu_nama : '......................................................' }}</span><br>
                     Istri
                 </td>
                 <td width="50%" style="vertical-align:top;">
-                    Wonosobo,..........................................<br>
-                    Yang menyatakan,<br><br>
+                    Wonosobo, {{ $tgl_ttd }}<br> Yang menyatakan,<br><br>
                     <div class="materai-box">Materai<br>Rp. 10.000,-</div>
                     <br>
-                    ......................................................<br>
+                    <span class="nama-ttd-otomatis">{{ !empty($ayah_nama) ? $ayah_nama : '......................................................' }}</span><br>
                     Suami
                 </td>
             </tr>

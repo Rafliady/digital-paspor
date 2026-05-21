@@ -7,6 +7,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\SpriPemohon;       // Model untuk DB SPRI (Read Only)
 use Illuminate\Support\Facades\DB; // Untuk DB Lokal (Log Admin)
 use Carbon\Carbon; // Tambahkan Carbon untuk manipulasi tanggal
+use Illuminate\Support\Facades\Log;
 
 class PasporController extends Controller
 {
@@ -21,7 +22,7 @@ class PasporController extends Controller
     // ==========================================
     // FITUR 1: API CARI DATA SPRI (Database Eksternal)
     // ==========================================
-    public function cariDataSpri($nomor_permohonan)
+    public function cariDataSpri(string $nomor_permohonan)
     {
         // 1. PENTING: Perpanjang waktu tunggu (5 menit) agar tidak timeout
         set_time_limit(300);
@@ -81,17 +82,57 @@ class PasporController extends Controller
     // ==========================================
     // FITUR 2: DASHBOARD ADMIN
     // ==========================================
-    public function dashboard()
+   // ==========================================
+    // FITUR 2: DASHBOARD ADMIN (Dengan Filter, Search, & Pagination)
+    // ==========================================
+    public function dashboard(Request $request)
     {
         try {
-            $data = DB::table('riwayat_cetak')
-                      ->orderBy('created_at', 'desc')
-                      ->get();
+            $query = DB::table('riwayat_cetak');
+
+            // Fitur 1: Pencarian Berdasarkan Nama atau NIK
+            if ($request->has('cari') && $request->cari != '') {
+                $query->where('nama_lengkap', 'like', '%' . $request->cari . '%')
+                      ->orWhere('nik', 'like', '%' . $request->cari . '%');
+            }
+
+            // Fitur 2: Filter Berdasarkan Tanggal Cetak
+            if ($request->has('filter_tanggal') && $request->filter_tanggal != '') {
+                // Konversi tanggal HTML (Y-m-d) agar cocok dengan created_at di DB
+                $query->whereDate('waktu_cetak', $request->filter_tanggal);
+            }
+
+            // Hitung Statistik Cepat (Untuk Kotak Summary)
+            $totalPemohon = DB::table('riwayat_cetak')->count();
+            $pemohonHariIni = DB::table('riwayat_cetak')->whereDate('waktu_cetak', Carbon::today())->count();
+            $pemohonManual = DB::table('riwayat_cetak')->where('metode', 'MANUAL')->count();
+            $pemohonOtomatis = $totalPemohon - $pemohonManual;
+
+            // Pagination (Tampilkan 15 data per halaman)
+            $data = $query->orderBy('created_at', 'desc')->paginate(15);
+            
+            // Tambahkan query string ke link pagination agar tidak hilang saat di-klik Next Page
+            $data->appends($request->all());
+
         } catch (\Exception $e) {
             $data = []; 
+            $totalPemohon = 0; $pemohonHariIni = 0; $pemohonOtomatis = 0; $pemohonManual = 0;
         }
 
-        return view('dashboard', compact('data'));
+        return view('dashboard', compact('data', 'totalPemohon', 'pemohonHariIni', 'pemohonOtomatis', 'pemohonManual'));
+    }
+
+    // ==========================================
+    // FITUR TAMBAHAN: HAPUS RIWAYAT CETAK
+    // ==========================================
+    public function hapusRiwayat(string $id)
+    {
+        try {
+            DB::table('riwayat_cetak')->where('id', $id)->delete();
+            return redirect()->back()->with('success', 'Data pemohon berhasil dihapus dari riwayat.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal menghapus data.');
+        }
     }
 
     // ==========================================
@@ -140,7 +181,7 @@ class PasporController extends Controller
             ]);
         } catch (\Exception $e) {
             // Log error tapi biarkan proses cetak lanjut
-            \Log::error("Gagal menyimpan riwayat cetak: " . $e->getMessage());
+           \Illuminate\Support\Facades\Log::error("Gagal menyimpan riwayat cetak: " . $e->getMessage());
         }
         // ---------------------------------------------------------
 
